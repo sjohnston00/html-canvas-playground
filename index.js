@@ -1,0 +1,55 @@
+import Shape from './Shape.js';
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const amount = document.getElementById('amount');
+const amountSpan = document.getElementById('amount-span');
+let shapesAmount = (amount === null || amount === void 0 ? void 0 : amount.valueAsNumber) || 1;
+amount === null || amount === void 0 ? void 0 : amount.addEventListener('input', (e) => {
+    shapesAmount = amount.valueAsNumber || 1;
+    amountSpan.textContent = shapesAmount.toString();
+    init();
+});
+const speed = document.getElementById('speed');
+const speedSpan = document.getElementById('speed-span');
+let shapeSpeed = (speed === null || speed === void 0 ? void 0 : speed.valueAsNumber) || 1;
+speed === null || speed === void 0 ? void 0 : speed.addEventListener('input', (e) => {
+    shapeSpeed = speed.valueAsNumber || 1;
+    speedSpan.textContent = shapeSpeed.toString();
+    for (let index = 0; index < shapes.length; index++) {
+        shapes[index].dx = shapes[index].dx < 0 ? shapeSpeed * -1 : shapeSpeed;
+        shapes[index].dy = shapes[index].dy < 0 ? shapeSpeed * -1 : shapeSpeed;
+    }
+    // init()
+});
+let innerHeight = window.innerHeight;
+let innerWidth = window.innerWidth;
+window.addEventListener('resize', (e) => {
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    innerHeight = window.innerHeight;
+    innerWidth = window.innerWidth;
+});
+canvas.height = innerHeight;
+canvas.width = innerWidth;
+let shapes = [];
+function init() {
+    shapes = [];
+    for (let index = 0; index < shapesAmount; index++) {
+        const height = Math.floor(Math.random() * 100) + 10;
+        const width = Math.floor(Math.random() * 100) + 10;
+        const x = Math.random() * (innerWidth - width * 2) + width;
+        const y = Math.random() * (innerHeight - height * 2) + height;
+        const dx = Math.random() > 0.5 ? shapeSpeed : shapeSpeed * -1;
+        const dy = Math.random() > 0.5 ? shapeSpeed : shapeSpeed * -1;
+        shapes.push(new Shape(x, y, height, width, 'red', dx, dy));
+    }
+}
+function draw() {
+    requestAnimationFrame(draw);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let index = 0; index < shapes.length; index++) {
+        shapes[index].update(ctx, innerWidth, innerHeight);
+    }
+}
+init();
+draw();
