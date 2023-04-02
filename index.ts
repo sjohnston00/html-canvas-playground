@@ -7,6 +7,13 @@ const amountSpan = document.getElementById('amount-span') as HTMLSpanElement
 let shapesAmount = amount?.valueAsNumber || 1
 
 amount?.addEventListener('input', (e) => {
+  //adding and remove items rather than re-rendering
+  // if (amount.valueAsNumber > shapesAmount) {
+  //   const { x, y, height, width, dx, dy } = generateRandomShape()
+  //   shapes.push(new Shape(x, y, height, width, 'red', dx, dy))
+  // } else if (amount.valueAsNumber < shapesAmount) {
+  //   shapes.pop()
+  // }
   shapesAmount = amount.valueAsNumber || 1
   amountSpan.textContent = shapesAmount.toString()
   init()
@@ -36,6 +43,8 @@ window.addEventListener('resize', (e) => {
 
   innerHeight = window.innerHeight
   innerWidth = window.innerWidth
+
+  init()
 })
 
 canvas.height = innerHeight
@@ -46,14 +55,19 @@ let shapes: Shape[] = []
 function init() {
   shapes = []
   for (let index = 0; index < shapesAmount; index++) {
-    const height = Math.floor(Math.random() * 100) + 10
-    const width = Math.floor(Math.random() * 100) + 10
-    const x = Math.random() * (innerWidth - width * 2) + width
-    const y = Math.random() * (innerHeight - height * 2) + height
-    const dx = Math.random() > 0.5 ? shapeSpeed : shapeSpeed * -1
-    const dy = Math.random() > 0.5 ? shapeSpeed : shapeSpeed * -1
+    const { x, y, height, width, dx, dy } = generateRandomShape()
     shapes.push(new Shape(x, y, height, width, 'red', dx, dy))
   }
+}
+
+function generateRandomShape() {
+  const height = Math.floor(Math.random() * 100) + 10
+  const width = Math.floor(Math.random() * 100) + 10
+  const x = Math.random() * (innerWidth - width * 2) + width
+  const y = Math.random() * (innerHeight - height * 2) + height
+  const dx = Math.random() > 0.5 ? shapeSpeed : shapeSpeed * -1
+  const dy = Math.random() > 0.5 ? shapeSpeed : shapeSpeed * -1
+  return { x, y, height, width, dx, dy }
 }
 
 function draw() {
