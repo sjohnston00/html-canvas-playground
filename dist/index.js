@@ -37,20 +37,40 @@ window.addEventListener('resize', (e) => {
     innerWidth = window.innerWidth;
     init();
 });
+window.addEventListener('keydown', (e) => {
+    square.addKeyState(e.key);
+    // switch (e.key) {
+    //   case 'ArrowRight':
+    //     square.dx = 10
+    //     break
+    //   case 'ArrowLeft':
+    //     square.dx = -10
+    //     break
+    //   case ' ':
+    //     square.dy = -10
+    //   default:
+    //     break
+    // }
+});
+window.addEventListener('keyup', (e) => {
+    square.removeKeyState(e.key);
+    square.dx = 0;
+});
 canvas.height = innerHeight;
 canvas.width = innerWidth;
 let shapes = [];
+const square = new Shape(10, 1, 40, 40, 'red', 0, 0);
 function init() {
     shapes = [];
-    for (let index = 0; index < shapesAmount; index++) {
-        const { x, y, height, width, dx, dy } = generateRandomShape();
-        shapes.push(new Shape(x, y, height, width, generateRandonColour(), dx, dy));
-    }
+    // for (let index = 0; index < shapesAmount; index++) {
+    //   const { x, y, height, width, dx, dy } = generateRandomMovingShape()
+    //   shapes.push(new Shape(x, y, height, width, generateRandonColour(), dx, dy))
+    // }
 }
 function generateRandonColour() {
     return `#${((Math.random() * 0xffffff) << 0).toString(16)}`;
 }
-function generateRandomShape() {
+function generateRandomMovingShape() {
     const height = Math.floor(Math.random() * 100) + 10;
     const width = Math.floor(Math.random() * 100) + 10;
     const x = Math.random() * (innerWidth - width * 2) + width;
@@ -65,6 +85,8 @@ function draw() {
     for (let index = 0; index < shapes.length; index++) {
         shapes[index].update(ctx, innerWidth, innerHeight);
     }
+    square.update(ctx, innerWidth, innerHeight);
 }
 init();
 draw();
+//# sourceMappingURL=index.js.map

@@ -6,6 +6,8 @@ export default class Shape {
   private _dx: number
   private _dy: number
   private _colour: string
+  private _gravity: number
+  private _keyState: any
 
   constructor(
     x: number,
@@ -14,7 +16,8 @@ export default class Shape {
     width: number,
     colour: string,
     dx: number,
-    dy: number
+    dy: number,
+    gravity: number = 0.5
   ) {
     this._x = x
     this._y = y
@@ -23,9 +26,20 @@ export default class Shape {
     this._colour = colour
     this._dx = dx
     this._dy = dy
+    this._gravity = gravity
+    this._keyState = {}
   }
 
   public draw(ctx: CanvasRenderingContext2D): void {
+    // const gradient = ctx.createLinearGradient(
+    //   this._x,
+    //   this._y,
+    //   this._width,
+    //   this._height
+    // )
+    // gradient.addColorStop(0, this._colour)
+    // gradient.addColorStop(0.5, this._colour)
+    // gradient.addColorStop(1, 'black')
     ctx.fillStyle = this._colour
     ctx.fillRect(this._x, this._y, this._width, this._height)
   }
@@ -35,13 +49,42 @@ export default class Shape {
     innerWidth: number,
     innerHeight: number
   ): void {
-    if (this._x + this._width > innerWidth || this._x < 0) {
-      this._dx = -this._dx
+    // console .log(this._keyState)
+
+    if (this._keyState['ArrowRight']) {
+      this._dx = 10
+    } else if (this._keyState['ArrowLeft']) {
+      this._dx = -10
     }
 
-    if (this._y + this._height > innerHeight || this._y < 0) {
-      this._dy = -this._dy
+    if (this._keyState[' ']) {
+      this._dy = -10
     }
+
+    if (this._x + this._width >= innerWidth) {
+      this._dx = 0
+      this._x = innerWidth - this._width
+    }
+
+    if (this._x <= 0) {
+      this._dx = 0
+      this._x = 0
+    }
+
+    if (this._y + this._height >= innerHeight) {
+      //if we hit the bottom, set dy to 0 (not moving)
+      this._dy = 0
+      this._y = innerHeight - this._height
+    }
+
+    if (this._y <= 0) {
+      //if we hit the top just reverse
+      this._dy = 0
+      this._y = 0
+    }
+
+    // debugger
+    this._dy += this._gravity
     this._x += this._dx
     this._y += this._dy
 
@@ -89,5 +132,20 @@ export default class Shape {
   }
   public set colour(value: string) {
     this._colour = value
+  }
+  public get gravity(): number {
+    return this._gravity
+  }
+  public set gravity(value: number) {
+    this._gravity = value
+  }
+  public get keyState() {
+    return this._keyState
+  }
+  public addKeyState(value: string) {
+    this._keyState[value] = true
+  }
+  public removeKeyState(value: string) {
+    this._keyState[value] = undefined
   }
 }
