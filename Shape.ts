@@ -26,7 +26,7 @@ export default class Shape {
   }
 
   public draw(ctx: CanvasRenderingContext2D): void {
-    ctx.fillStyle = '#cccccc'
+    ctx.fillStyle = this._colour
     ctx.fillRect(this._x, this._y, this._width, this._height)
   }
 

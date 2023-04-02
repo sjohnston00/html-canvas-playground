@@ -56,8 +56,12 @@ function init() {
   shapes = []
   for (let index = 0; index < shapesAmount; index++) {
     const { x, y, height, width, dx, dy } = generateRandomShape()
-    shapes.push(new Shape(x, y, height, width, 'red', dx, dy))
+    shapes.push(new Shape(x, y, height, width, generateRandonColour(), dx, dy))
   }
+}
+
+function generateRandonColour() {
+  return `#${((Math.random() * 0xffffff) << 0).toString(16)}`
 }
 
 function generateRandomShape() {

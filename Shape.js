@@ -9,7 +9,7 @@ export default class Shape {
         this._dy = dy;
     }
     draw(ctx) {
-        ctx.fillStyle = '#cccccc';
+        ctx.fillStyle = this._colour;
         ctx.fillRect(this._x, this._y, this._width, this._height);
     }
     update(ctx, innerWidth, innerHeight) {
