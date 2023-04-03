@@ -23,7 +23,9 @@ export default class Shape {
         ctx.fillStyle = this._colour;
         ctx.fillRect(this._x, this._y, this._width, this._height);
     }
-    update(ctx, innerWidth, innerHeight) {
+    update(ctx) {
+        const innerHeight = ctx.canvas.height;
+        const innerWidth = ctx.canvas.width;
         // console .log(this._keyState)
         if (this._keyState['ArrowRight']) {
             this._dx = 10;

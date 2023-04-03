@@ -27,10 +27,10 @@ speed?.addEventListener('input', (e) => {
   shapeSpeed = speed.valueAsNumber || 1
   speedSpan.textContent = shapeSpeed.toString()
 
-  for (let index = 0; index < shapes.length; index++) {
-    shapes[index].dx = shapes[index].dx < 0 ? shapeSpeed * -1 : shapeSpeed
-    shapes[index].dy = shapes[index].dy < 0 ? shapeSpeed * -1 : shapeSpeed
-  }
+  shapes.forEach((s) => {
+    s.dx = s.dx < 0 ? shapeSpeed * -1 : shapeSpeed
+    s.dy = s.dy < 0 ? shapeSpeed * -1 : shapeSpeed
+  })
   // init()
 })
 
@@ -71,12 +71,12 @@ window.addEventListener('keyup', (e) => {
 canvas.height = innerHeight
 canvas.width = innerWidth
 
-let shapes: Shape[] = []
+let shapes = new Map<string, Shape>()
 
 const square = new Shape(10, 1, 40, 40, 'red', 0, 0)
 
 function init() {
-  shapes = []
+  shapes = new Map<string, Shape>()
   // for (let index = 0; index < shapesAmount; index++) {
   //   const { x, y, height, width, dx, dy } = generateRandomMovingShape()
   //   shapes.push(new Shape(x, y, height, width, generateRandonColour(), dx, dy))
@@ -100,10 +100,10 @@ function generateRandomMovingShape() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-  for (let index = 0; index < shapes.length; index++) {
-    shapes[index].update(ctx, innerWidth, innerHeight)
-  }
-  square.update(ctx, innerWidth, innerHeight)
+  shapes.forEach((s) => {
+    s.update(ctx)
+  })
+  square.update(ctx)
 
   //bottom
   ctx.strokeStyle = 'black'

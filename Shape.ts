@@ -44,11 +44,9 @@ export default class Shape {
     ctx.fillRect(this._x, this._y, this._width, this._height)
   }
 
-  public update(
-    ctx: CanvasRenderingContext2D,
-    innerWidth: number,
-    innerHeight: number
-  ): void {
+  public update(ctx: CanvasRenderingContext2D): void {
+    const innerHeight = ctx.canvas.height
+    const innerWidth = ctx.canvas.width
     // console .log(this._keyState)
 
     if (this._keyState['ArrowRight']) {
