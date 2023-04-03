@@ -49,6 +49,9 @@ window.addEventListener('resize', (e) => {
 
 window.addEventListener('keydown', (e) => {
   square.addKeyState(e.key)
+  if (e.key === ' ') {
+    console.log('spacebar')
+  }
   // switch (e.key) {
   //   case 'ArrowRight':
   //     square.dx = 10
@@ -61,6 +64,13 @@ window.addEventListener('keydown', (e) => {
   //   default:
   //     break
   // }
+})
+
+window.addEventListener('touchstart', (e) => {
+  square.addKeyState(' ')
+})
+window.addEventListener('touchend', (e) => {
+  square.removeKeyState(' ')
 })
 
 window.addEventListener('keyup', (e) => {
@@ -79,7 +89,10 @@ function init() {
   shapes = new Map<string, Shape>()
   // for (let index = 0; index < shapesAmount; index++) {
   //   const { x, y, height, width, dx, dy } = generateRandomMovingShape()
-  //   shapes.push(new Shape(x, y, height, width, generateRandonColour(), dx, dy))
+  //   shapes.set(
+  //     window.crypto.randomUUID(),
+  //     new Shape(x, y, height, width, generateRandonColour(), dx, dy)
+  //   )
   // }
 }
 
@@ -104,6 +117,13 @@ function draw() {
     s.update(ctx)
   })
   square.update(ctx)
+  if (square.keyState.has(' ')) {
+    ctx.beginPath()
+    ctx.moveTo(square.x + square.width / 2, square.y + square.height / 2)
+    ctx.lineTo(200, 200)
+    ctx.strokeStyle = 'black'
+    ctx.stroke()
+  }
 
   //bottom
   ctx.strokeStyle = 'black'

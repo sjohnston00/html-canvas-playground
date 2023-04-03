@@ -7,7 +7,7 @@ export default class Shape {
   private _dy: number
   private _colour: string
   private _gravity: number
-  private _keyState: any
+  private _keyState: Map<string, boolean>
 
   constructor(
     x: number,
@@ -27,7 +27,7 @@ export default class Shape {
     this._dx = dx
     this._dy = dy
     this._gravity = gravity
-    this._keyState = {}
+    this._keyState = new Map<string, boolean>()
   }
 
   public draw(ctx: CanvasRenderingContext2D): void {
@@ -49,36 +49,34 @@ export default class Shape {
     const innerWidth = ctx.canvas.width
     // console .log(this._keyState)
 
-    if (this._keyState['ArrowRight']) {
+    if (this._keyState.has('ArrowRight')) {
       this._dx = 10
-    } else if (this._keyState['ArrowLeft']) {
+    } else if (this._keyState.has('ArrowLeft')) {
       this._dx = -10
     }
 
-    if (this._keyState[' ']) {
+    if (this._keyState.has(' ')) {
       this._dy = -10
     }
 
-    if (this._x + this._width >= innerWidth) {
-      this._dx = 0
-      this._x = innerWidth - this._width
-    }
-
-    if (this._x <= 0) {
-      this._dx = 0
+    if (this._x + this._width > innerWidth) {
       this._x = 0
     }
 
-    if (this._y + this._height >= innerHeight) {
+    if (this._x < 0) {
+      this._x = innerWidth - this._width
+    }
+
+    if (this._y + this._height + 100 > innerHeight + 1) {
       //if we hit the bottom, set dy to 0 (not moving)
       this._dy = 0
-      this._y = innerHeight - this._height
+      this._y = innerHeight - this._height - 100
     }
 
     if (this._y <= 0) {
       //if we hit the top just reverse
-      this._dy = 0
-      this._y = 0
+      // this._dy = 0
+      this._y = innerHeight - this.height - 100
     }
 
     // debugger
@@ -141,9 +139,9 @@ export default class Shape {
     return this._keyState
   }
   public addKeyState(value: string) {
-    this._keyState[value] = true
+    this._keyState.set(value, true)
   }
   public removeKeyState(value: string) {
-    this._keyState[value] = undefined
+    this._keyState.delete(value)
   }
 }
