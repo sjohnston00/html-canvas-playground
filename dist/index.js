@@ -80,12 +80,40 @@ function generateRandomMovingShape() {
     return { x, y, height, width, dx, dy };
 }
 function draw() {
-    requestAnimationFrame(draw);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let index = 0; index < shapes.length; index++) {
         shapes[index].update(ctx, innerWidth, innerHeight);
     }
     square.update(ctx, innerWidth, innerHeight);
+    //bottom
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(0, innerHeight - 100, innerWidth, 100);
+    //circle 1
+    ctx.beginPath();
+    ctx.arc(100, 100, 20, 0, 2 * Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    //circle 2
+    ctx.beginPath();
+    ctx.arc(200, 200, 20, 0, 2 * Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    //circle 3
+    ctx.beginPath();
+    ctx.arc(300, 100, 20, 0, 2 * Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    //circle 4
+    ctx.beginPath();
+    ctx.arc(400, 200, 20, 0, 2 * Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    //circle 5
+    ctx.beginPath();
+    ctx.arc(500, 100, 20, 0, 2 * Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    requestAnimationFrame(draw);
 }
 init();
 draw();
