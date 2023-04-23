@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML Canvas Playground</title>
+    <script src="/dist/index.js" defer type="module"></script>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <canvas height="500" width="500" id="canvas"></canvas>
+    <div id="controls">
+      <div>
+        <label for="amount"
+          >Amount <span id="amount-span">10</span
+          ><input
+            type="range"
+            name="amount"
+            id="amount"
+            min="1"
+            max="1000"
+            value="10"
+        /></label>
+      </div>
+
+      <div>
+        <label for="speed"
+          >speed <span id="speed-span">6</span
+          ><input
+            type="range"
+            name="speed"
+            id="speed"
+            min="1"
+            max="100"
+            value="6"
+        /></label>
+      </div>
+    </div>
+  </body>
+</html>
