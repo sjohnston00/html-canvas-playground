@@ -74,7 +74,7 @@ function draw() {
       0
     )
 
-    shapes.set(crypto.randomUUID(), shape)
+    shapes.set(window.crypto.randomUUID(), shape)
   }
 
   shapes.forEach((s) => {
