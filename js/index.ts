@@ -51,7 +51,13 @@ window.addEventListener("resize", (e) => {
 })
 
 window.addEventListener("keydown", (e) => {
-  square.addKeyState(e.key)
+  if (e.key === " ") {
+    if (square.dy >= 0) {
+      square.addKeyState(e.key)
+    }
+  } else {
+    square.addKeyState(e.key)
+  }
 })
 
 window.addEventListener("touchstart", (e) => {
@@ -63,7 +69,6 @@ window.addEventListener("touchend", (e) => {
 
 window.addEventListener("keyup", (e) => {
   square.removeKeyState(e.key)
-  square.dx = 0
 })
 
 function findClosestShape(x: number, y: number): Shape | null {
@@ -80,19 +85,22 @@ function findClosestShape(x: number, y: number): Shape | null {
   return closestShape
 }
 
-let shapes = new Map<string, Shape>()
+let shapes: Shape[] = []
 
-const square = new Shape(10, 1, 40, 40, "red", 0, 0)
+const square = new Shape(10, innerHeight - 100, 40, 40, "red", 0, 0)
 
 function init() {
-  shapes = new Map<string, Shape>()
+  shapes = []
   for (let index = 0; index < shapesAmount; index++) {
     const { x, y, height, width, dx, dy } = generateRandomMovingShape()
-    shapes.set(
-      window.crypto.randomUUID(),
-      new Shape(x, y, height, width, generateRandonColour(), 0, 0, 0)
-    )
+    shapes.push(new Shape(x, y, height, width, generateRandonColour(), 0, 0, 0))
   }
+
+  shapes.push(
+    new Shape(-1, innerHeight - 100, 100, innerWidth + 1, "grey", 0, 0, 0)
+  )
+  square.collisionBlocks = shapes
+  console.log(square.collisionBlocks)
 }
 
 function generateRandonColour() {
@@ -111,24 +119,31 @@ function generateRandomMovingShape() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  shapes.forEach((s) => {
-    s.update(ctx)
-  })
   square.update(ctx)
 
-  if (square.keyState.has(" ")) {
-    const closestShape = findClosestShape(square.x, square.y)
-    if (closestShape) {
-      ctx.beginPath()
-      ctx.moveTo(square.x + square.width / 2, square.y + square.height / 2)
-      ctx.lineTo(
-        closestShape.x + closestShape.width / 2,
-        closestShape.y + closestShape.height / 2
-      )
-      ctx.strokeStyle = "black"
-      ctx.stroke()
-    }
+  for (let index = 0; index < shapes.length; index++) {
+    const s = shapes[index]
+    s.update(ctx)
+    // ctx.beginPath()
+    // ctx.moveTo(square.x + square.width / 2, square.y + square.height / 2)
+    // ctx.lineTo(s.x + s.width / 2, s.y + s.height / 2)
+    // ctx.strokeStyle = "black"
+    // ctx.stroke()
   }
+
+  // if (square.keyState.has(" ")) {
+  const closestShape = findClosestShape(square.x, square.y)
+  if (closestShape) {
+    ctx.beginPath()
+    ctx.moveTo(square.x + square.width / 2, square.y + square.height / 2)
+    ctx.lineTo(
+      closestShape.x + closestShape.width / 2,
+      closestShape.y + closestShape.height / 2
+    )
+    ctx.strokeStyle = "black"
+    ctx.stroke()
+  }
+  // }
 
   //bottom
   ctx.strokeStyle = "black"

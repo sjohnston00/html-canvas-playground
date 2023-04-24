@@ -8,6 +8,7 @@ export default class Shape {
   private _colour: string
   private _gravity: number
   private _keyState: Map<string, boolean>
+  private _collisionBlocks: Shape[]
 
   constructor(
     x: number,
@@ -17,7 +18,8 @@ export default class Shape {
     colour: string,
     dx: number,
     dy: number,
-    gravity: number = 0.5
+    gravity: number = 0.5,
+    collisionBlocks: Shape[] = []
   ) {
     this._x = x
     this._y = y
@@ -28,6 +30,7 @@ export default class Shape {
     this._dy = dy
     this._gravity = gravity
     this._keyState = new Map<string, boolean>()
+    this._collisionBlocks = collisionBlocks
   }
 
   public draw(ctx: CanvasRenderingContext2D): void {
@@ -45,46 +48,107 @@ export default class Shape {
   }
 
   public update(ctx: CanvasRenderingContext2D): void {
-    const innerHeight = ctx.canvas.height
-    const innerWidth = ctx.canvas.width
     // console .log(this._keyState)
 
+    this._x += this._dx
+    this.handleInput()
+
+    this.checkForHorizontalCollisions(ctx)
+    this.applyGravity()
+    this.checkForVerticalCollisions(ctx)
+
+    this.draw(ctx)
+  }
+
+  checkForHorizontalCollisions(ctx: CanvasRenderingContext2D) {
+    const innerWidth = ctx.canvas.width
+
+    if (this._x < 0) {
+      this._x = 0
+    }
+    if (this._x + this._width > innerWidth) {
+      this._x = innerWidth - this._width
+    }
+
+    for (let i = 0; i < this._collisionBlocks.length; i++) {
+      const collisionBlock = this._collisionBlocks[i]
+
+      // if a collision exists
+      if (
+        this._x <= collisionBlock.x + collisionBlock.width &&
+        this.x + this.width >= collisionBlock.x &&
+        this.y + this.height >= collisionBlock.y &&
+        this.y <= collisionBlock.y + collisionBlock.height
+      ) {
+        // collision on x axis going to the left
+        if (this.dx < -0) {
+          const offset = this.x - this.x
+          this.x = collisionBlock.x + collisionBlock.width - offset + 0.01
+          break
+        }
+
+        if (this.dx > 0) {
+          const offset = this.x - this.x + this.width
+          this.x = collisionBlock.x - offset - 0.01
+          break
+        }
+      }
+    }
+  }
+
+  checkForVerticalCollisions(ctx: CanvasRenderingContext2D) {
+    const innerHeight = ctx.canvas.height
+
+    if (this._y < 0) {
+      this._y = 0
+    }
+    if (this._y + this._height > innerHeight) {
+      this._y = innerHeight - this._height
+    }
+
+    for (let i = 0; i < this.collisionBlocks.length; i++) {
+      const collisionBlock = this.collisionBlocks[i]
+
+      // if a collision exists
+      if (
+        this.x <= collisionBlock.x + collisionBlock.width &&
+        this.x + this.width >= collisionBlock.x &&
+        this.y + this.height >= collisionBlock.y &&
+        this.y <= collisionBlock.y + collisionBlock.height
+      ) {
+        if (this.dy < 0) {
+          this.dy = 0
+          const offset = this.y - this.y
+          this.y = collisionBlock.y + collisionBlock.height - offset + 0.01
+          break
+        }
+
+        if (this.dy > 0) {
+          this.dy = 0
+          const offset = this.y - this.y + this.height
+          this.y = collisionBlock.y - offset - 0.01
+          break
+        }
+      }
+    }
+  }
+
+  applyGravity() {
+    this.dy += this.gravity
+    this.y += this.dy
+  }
+
+  handleInput() {
+    this.dx = 0
     if (this._keyState.has("ArrowRight")) {
-      this._dx = 10
+      this.dx = 5
     } else if (this._keyState.has("ArrowLeft")) {
-      this._dx = -10
+      this.dx = -5
     }
 
     if (this._keyState.has(" ")) {
       this._dy = -10
     }
-
-    if (this._x + this._width > innerWidth) {
-      this._x = 0
-    }
-
-    if (this._x < 0) {
-      this._x = innerWidth - this._width
-    }
-
-    if (this._y + this._height + 100 >= innerHeight) {
-      //if we hit the bottom, set dy to 0 (not moving)
-      this._dy = 0
-      this._y = innerHeight - this._height - 100
-    }
-
-    if (this._y <= 0) {
-      //if we hit the top just reverse
-      // this._dy = 0
-      this._y = innerHeight - this.height - 100
-    }
-
-    // debugger
-    this._dy += this._gravity
-    this._x += this._dx
-    this._y += this._dy
-
-    this.draw(ctx)
   }
 
   public get x(): number {
@@ -143,5 +207,11 @@ export default class Shape {
   }
   public removeKeyState(value: string) {
     this._keyState.delete(value)
+  }
+  public get collisionBlocks(): Shape[] {
+    return this._collisionBlocks
+  }
+  public set collisionBlocks(value: Shape[]) {
+    this._collisionBlocks = value
   }
 }
