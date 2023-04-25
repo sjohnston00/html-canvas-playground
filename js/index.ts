@@ -1,17 +1,17 @@
-import Shape from "./Shape.js"
-const canvas = document.getElementById("canvas") as HTMLCanvasElement
-const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
+import Shape from './Shape.js'
+const canvas = document.getElementById('canvas') as HTMLCanvasElement
+const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
-const amount = document.getElementById("amount") as HTMLInputElement
-const amountSpan = document.getElementById("amount-span") as HTMLSpanElement
+const amount = document.getElementById('amount') as HTMLInputElement
+const amountSpan = document.getElementById('amount-span') as HTMLSpanElement
 
-const speed = document.getElementById("speed") as HTMLInputElement
-const speedSpan = document.getElementById("speed-span") as HTMLSpanElement
+const speed = document.getElementById('speed') as HTMLInputElement
+const speedSpan = document.getElementById('speed-span') as HTMLSpanElement
 
 let shapeSpeed = speed?.valueAsNumber || 1
 let shapesAmount = amount?.valueAsNumber || 1
 
-amount?.addEventListener("input", (e) => {
+amount?.addEventListener('input', (e) => {
   //adding and remove items rather than re-rendering
   // if (amount.valueAsNumber > shapesAmount) {
   //   const { x, y, height, width, dx, dy } = generateRandomShape()
@@ -24,7 +24,7 @@ amount?.addEventListener("input", (e) => {
   init()
 })
 
-speed?.addEventListener("input", (e) => {
+speed?.addEventListener('input', (e) => {
   shapeSpeed = speed.valueAsNumber || 1
   speedSpan.textContent = shapeSpeed.toString()
 
@@ -41,7 +41,7 @@ let innerWidth = window.innerWidth
 canvas.height = innerHeight
 canvas.width = innerWidth
 
-window.addEventListener("resize", (e) => {
+window.addEventListener('resize', (e) => {
   innerHeight = window.innerHeight
   innerWidth = window.innerWidth
 
@@ -50,8 +50,8 @@ window.addEventListener("resize", (e) => {
   init()
 })
 
-window.addEventListener("keydown", (e) => {
-  if (e.key === " ") {
+window.addEventListener('keydown', (e) => {
+  if (e.key === ' ') {
     if (square.dy >= 0) {
       square.addKeyState(e.key)
     }
@@ -60,14 +60,14 @@ window.addEventListener("keydown", (e) => {
   }
 })
 
-window.addEventListener("touchstart", (e) => {
-  square.addKeyState(" ")
+window.addEventListener('touchstart', (e) => {
+  square.addKeyState(' ')
 })
-window.addEventListener("touchend", (e) => {
-  square.removeKeyState(" ")
+window.addEventListener('touchend', (e) => {
+  square.removeKeyState(' ')
 })
 
-window.addEventListener("keyup", (e) => {
+window.addEventListener('keyup', (e) => {
   square.removeKeyState(e.key)
 })
 
@@ -75,6 +75,7 @@ function findClosestShape(x: number, y: number): Shape | null {
   let closestDistance = Infinity
   let closestShape = null
   shapes.forEach((shape) => {
+    if (!shape.hookable) return
     // if (shape.y > y) return //only find the closest shapes that are above the passed in shape (like a swing)
     let distance = Math.sqrt((shape.x - x) ** 2 + (shape.y - y) ** 2)
     if (distance < closestDistance) {
@@ -87,17 +88,28 @@ function findClosestShape(x: number, y: number): Shape | null {
 
 let shapes: Shape[] = []
 
-const square = new Shape(10, innerHeight - 100, 40, 40, "red", 0, 0)
+const square = new Shape(10, innerHeight - 100, 40, 40, 'red', 0, 0)
 
 function init() {
   shapes = []
   for (let index = 0; index < shapesAmount; index++) {
     const { x, y, height, width, dx, dy } = generateRandomMovingShape()
-    shapes.push(new Shape(x, y, height, width, generateRandonColour(), 0, 0, 0))
+    const newShape = new Shape(
+      x,
+      y,
+      height,
+      width,
+      generateRandonColour(),
+      0,
+      0,
+      0
+    )
+    newShape.hookable = true
+    shapes.push(newShape)
   }
 
   shapes.push(
-    new Shape(-1, innerHeight - 100, 100, innerWidth + 1, "grey", 0, 0, 0)
+    new Shape(-1, innerHeight - 100, 100, innerWidth + 1, 'grey', 0, 0, 0)
   )
   square.collisionBlocks = shapes
   console.log(square.collisionBlocks)
@@ -108,8 +120,8 @@ function generateRandonColour() {
 }
 
 function generateRandomMovingShape() {
-  const height = Math.floor(Math.random() * 100) + 10
-  const width = Math.floor(Math.random() * 100) + 10
+  const height = Math.floor(Math.random() * 100) + 25
+  const width = Math.floor(Math.random() * 100) + 25
   const x = Math.random() * (innerWidth - width * 2) + width
   const y = Math.random() * (innerHeight - height * 2) + height
   const dx = Math.random() > 0.5 ? shapeSpeed : shapeSpeed * -1
@@ -134,19 +146,39 @@ function draw() {
   // if (square.keyState.has(" ")) {
   const closestShape = findClosestShape(square.x, square.y)
   if (closestShape) {
+    // ctx.beginPath()
+    // ctx.moveTo(square.x + square.width / 2, square.y + square.height / 2)
+    // ctx.lineTo(
+    //   closestShape.x + closestShape.width / 2,
+    //   closestShape.y + closestShape.height / 2
+    // )
+    // ctx.strokeStyle = 'black'
+    // ctx.stroke()
     ctx.beginPath()
-    ctx.moveTo(square.x + square.width / 2, square.y + square.height / 2)
-    ctx.lineTo(
+    ctx.arc(
       closestShape.x + closestShape.width / 2,
-      closestShape.y + closestShape.height / 2
+      closestShape.y + closestShape.height / 2,
+      5,
+      0,
+      2 * Math.PI
     )
-    ctx.strokeStyle = "black"
+    ctx.fillStyle = 'black'
     ctx.stroke()
+    if (square.isJumping) {
+      ctx.beginPath()
+      ctx.moveTo(square.x + square.width / 2, square.y + square.height / 2)
+      ctx.lineTo(
+        closestShape.x + closestShape.width / 2,
+        closestShape.y + closestShape.height / 2
+      )
+      ctx.strokeStyle = 'black'
+      ctx.stroke()
+    }
   }
   // }
 
   //bottom
-  ctx.strokeStyle = "black"
+  ctx.strokeStyle = 'black'
   ctx.strokeRect(-1, innerHeight - 100, innerWidth + 1, 100)
   requestAnimationFrame(draw)
 }

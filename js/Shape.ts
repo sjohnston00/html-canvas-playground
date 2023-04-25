@@ -9,6 +9,7 @@ export default class Shape {
   private _gravity: number
   private _keyState: Map<string, boolean>
   private _collisionBlocks: Shape[]
+  private _hookable: boolean = false
 
   constructor(
     x: number,
@@ -140,13 +141,13 @@ export default class Shape {
 
   handleInput() {
     this.dx = 0
-    if (this._keyState.has("ArrowRight")) {
+    if (this._keyState.has('ArrowRight')) {
       this.dx = 5
-    } else if (this._keyState.has("ArrowLeft")) {
+    } else if (this._keyState.has('ArrowLeft')) {
       this.dx = -5
     }
 
-    if (this._keyState.has(" ")) {
+    if (this._keyState.has(' ')) {
       this._dy = -10
     }
   }
@@ -213,5 +214,15 @@ export default class Shape {
   }
   public set collisionBlocks(value: Shape[]) {
     this._collisionBlocks = value
+  }
+  public get hookable(): boolean {
+    return this._hookable
+  }
+  public set hookable(value: boolean) {
+    this._hookable = value
+  }
+
+  public get isJumping() {
+    return this._keyState.has(' ')
   }
 }
