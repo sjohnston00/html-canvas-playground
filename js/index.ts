@@ -123,7 +123,7 @@ function generateRandomMovingShape() {
   const height = Math.floor(Math.random() * 100) + 25
   const width = Math.floor(Math.random() * 100) + 25
   const x = Math.random() * (innerWidth - width * 2) + width
-  const y = Math.random() * (innerHeight - height * 2) + height
+  const y = Math.random() * (innerHeight - height * 2) + height - 100
   const dx = Math.random() > 0.5 ? shapeSpeed : shapeSpeed * -1
   const dy = Math.random() > 0.5 ? shapeSpeed : shapeSpeed * -1
   return { x, y, height, width, dx, dy }
