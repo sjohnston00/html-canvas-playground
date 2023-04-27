@@ -8,8 +8,8 @@ const amountSpan = document.getElementById('amount-span') as HTMLSpanElement
 const speed = document.getElementById('speed') as HTMLInputElement
 const speedSpan = document.getElementById('speed-span') as HTMLSpanElement
 
-let shapeSpeed = speed?.valueAsNumber || 1
-let shapesAmount = amount?.valueAsNumber || 1
+let shapeSpeed = speed?.valueAsNumber || 0
+let shapesAmount = amount?.valueAsNumber || 0
 
 amount?.addEventListener('input', (e) => {
   //adding and remove items rather than re-rendering
@@ -19,7 +19,7 @@ amount?.addEventListener('input', (e) => {
   // } else if (amount.valueAsNumber < shapesAmount) {
   //   shapes.pop()
   // }
-  shapesAmount = amount.valueAsNumber || 1
+  shapesAmount = amount.valueAsNumber || 0
   amountSpan.textContent = shapesAmount.toString()
   init()
 })
@@ -47,6 +47,9 @@ window.addEventListener('resize', (e) => {
 
   canvas.height = innerHeight
   canvas.width = innerWidth
+
+  drawImage()
+
   init()
 })
 
@@ -108,8 +111,24 @@ function init() {
     shapes.push(newShape)
   }
 
+  // shapes.push(new Shape(60, innerHeight - 100, 100, 300, 'black', 0, 0, 0))
+  // shapes.push(new Shape(360, innerHeight - 200, 200, 300, 'black', 0, 0, 0))
+  // shapes.push(new Shape(660, innerHeight - 300, 300, 300, 'black', 0, 0, 0))
+  // shapes.push(new Shape(960, innerHeight - 400, 400, 300, 'black', 0, 0, 0))
+  // shapes.push(new Shape(1260, innerHeight - 500, 500, 300, 'black', 0, 0, 0))
+  // shapes.push(new Shape(1260, innerHeight - 500, 500, 300, 'black', 0, 0, 0))
+
   shapes.push(
-    new Shape(-1, innerHeight - 100, 100, innerWidth + 1, 'grey', 0, 0, 0)
+    new Shape(
+      -1,
+      innerHeight - 195,
+      195,
+      innerWidth + 1,
+      'transparent',
+      0,
+      0,
+      0
+    )
   )
   square.collisionBlocks = shapes
   console.log(square.collisionBlocks)
@@ -129,8 +148,40 @@ function generateRandomMovingShape() {
   return { x, y, height, width, dx, dy }
 }
 
+const backgroundImage = new Image()
+backgroundImage.src =
+  'https://img.freepik.com/free-vector/autumn-landscape-background_1012-302.jpg?w=2000&t=st=1682620326~exp=1682620926~hmac=ab958d510de1c3f3a4b38c369141ae3cc591d26a41c794e1a47c4851a6ddb9bc'
+
+backgroundImage.onload = () => {
+  drawImage()
+}
+
+let backgroundImageXPos = 0
+let backgroundImageYPos = 0
+
+function drawImage() {
+  //TODO: figure out how to draw the image background and move the "camera" based on the square, also make sure we dont move the camera past the boundaries of the image
+  const hRatio = canvas.width / backgroundImage.width
+  const vRatio = canvas.height / backgroundImage.height
+  const ratio = Math.min(hRatio, vRatio)
+  const zoom = 2
+  ctx.drawImage(
+    backgroundImage,
+    square.x - 100,
+    square.y - 100,
+    900 * zoom,
+    900 * 0.56 * zoom,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  )
+}
+
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
+  drawImage()
+  // ctx.drawImage(backgroundImage, 0, 0, innerWidth, innerHeight)
   square.update(ctx)
 
   for (let index = 0; index < shapes.length; index++) {
@@ -177,9 +228,9 @@ function draw() {
   }
   // }
 
-  //bottom
-  ctx.strokeStyle = 'black'
-  ctx.strokeRect(-1, innerHeight - 100, innerWidth + 1, 100)
+  // //bottom
+  // ctx.strokeStyle = 'black'
+  // ctx.strokeRect(-1, innerHeight - 100, innerWidth + 1, 100)
   requestAnimationFrame(draw)
 }
 
