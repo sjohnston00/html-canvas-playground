@@ -4,6 +4,7 @@
     "module": "ES2015" /* Specify what module code is generated. */,
     "strict": true /* Enable all strict type-checking options. */,
     "sourceMap": true,
+    "moduleResolution": "node",
     "outDir": "dist"
   }
 }

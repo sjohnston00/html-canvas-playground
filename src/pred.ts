@@ -1,5 +1,5 @@
-import Shape from './Shape.js'
-import { data } from './predData.js'
+import Shape from './Shape'
+import { data } from './predData'
 const canvas = document.getElementById('canvas') as HTMLCanvasElement
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 

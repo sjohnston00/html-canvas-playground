@@ -1,0 +1,27 @@
+{
+  "name": "html-canvas-playground",
+  "version": "1.0.0",
+  "description": "You'll need to first run the tsc --watch command in a terminal to compile the typescript into JS, you might also need to crete the `/dist` folder if it gives you an error",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --minify --target=es6 --outdir=build",
+    "dev": "esbuild src/index.ts --bundle --minify --target=es6 --watch --sourcemap --outdir=build",
+    "tsc:build": "tsc",
+    "tsc:dev": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sjohnston00/html-canvas-playground.git"
+  },
+  "keywords": [],
+  "author": "Sam Johnston",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sjohnston00/html-canvas-playground/issues"
+  },
+  "homepage": "https://github.com/sjohnston00/html-canvas-playground#readme",
+  "devDependencies": {
+    "esbuild": "^0.17.18",
+    "typescript": "^5.0.4"
+  }
+}

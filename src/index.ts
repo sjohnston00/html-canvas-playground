@@ -1,4 +1,4 @@
-import Shape from './Shape.js'
+import Shape from './Shape'
 const canvas = document.getElementById('canvas') as HTMLCanvasElement
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
@@ -38,8 +38,8 @@ speed?.addEventListener('input', (e) => {
 let innerHeight = window.innerHeight
 let innerWidth = window.innerWidth
 
-canvas.height = innerHeight
-canvas.width = innerWidth
+// canvas.height = innerHeight
+// canvas.width = innerWidth
 
 window.addEventListener('resize', (e) => {
   innerHeight = window.innerHeight
@@ -165,10 +165,33 @@ function drawImage() {
   const vRatio = canvas.height / backgroundImage.height
   const ratio = Math.min(hRatio, vRatio)
   const zoom = 2
+
+  function getImageX() {
+    if (square.x - 100 < 0) {
+      return 0
+    }
+
+    if (square.x + canvas.width / 2 > canvas.width) {
+      return canvas.width
+    }
+    return square.x - 100
+  }
+
+  const x = getImageX()
+  const y = square.y - 100 > 0 ? square.y - 100 : 0
+  console.log('image coords', {
+    x,
+    y,
+    backgroundImage: {
+      width: backgroundImage.width,
+      height: backgroundImage.height
+    },
+    canvas: { width: canvas.width, height: canvas.height }
+  })
   ctx.drawImage(
     backgroundImage,
-    square.x - 100,
-    square.y - 100,
+    x,
+    y,
     900 * zoom,
     900 * 0.56 * zoom,
     0,
