@@ -1,0 +1,39 @@
+{
+  "frames": {
+    "idle1.png": {
+      "frame": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "idle2.png": {
+      "frame": { "x": 48, "y": 0, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "idle3.png": {
+      "frame": { "x": 96, "y": 0, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "idle4.png": {
+      "frame": { "x": 144, "y": 0, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    }
+  },
+
+  "animations": {
+    "idle": ["idle1.png", "idle2.png", "idle3.png", "idle4.png"]
+  },
+
+  "meta": {
+    "image": "Punk_idle.png",
+    "format": "RGBA8888",
+    "size": { "w": 192, "h": 48 },
+    "scale": "1"
+  }
+}

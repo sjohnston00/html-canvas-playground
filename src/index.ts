@@ -1,17 +1,18 @@
-import Shape from './Shape'
-const canvas = document.getElementById('canvas') as HTMLCanvasElement
-const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+import Shape from "./Shape"
 
-const amount = document.getElementById('amount') as HTMLInputElement
-const amountSpan = document.getElementById('amount-span') as HTMLSpanElement
+const canvas = document.getElementById("canvas") as HTMLCanvasElement
+const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
 
-const speed = document.getElementById('speed') as HTMLInputElement
-const speedSpan = document.getElementById('speed-span') as HTMLSpanElement
+const amount = document.getElementById("amount") as HTMLInputElement
+const amountSpan = document.getElementById("amount-span") as HTMLSpanElement
+
+const speed = document.getElementById("speed") as HTMLInputElement
+const speedSpan = document.getElementById("speed-span") as HTMLSpanElement
 
 let shapeSpeed = speed?.valueAsNumber || 0
 let shapesAmount = amount?.valueAsNumber || 0
 
-amount?.addEventListener('input', (e) => {
+amount?.addEventListener("input", (e) => {
   //adding and remove items rather than re-rendering
   // if (amount.valueAsNumber > shapesAmount) {
   //   const { x, y, height, width, dx, dy } = generateRandomShape()
@@ -24,7 +25,7 @@ amount?.addEventListener('input', (e) => {
   init()
 })
 
-speed?.addEventListener('input', (e) => {
+speed?.addEventListener("input", (e) => {
   shapeSpeed = speed.valueAsNumber || 1
   speedSpan.textContent = shapeSpeed.toString()
 
@@ -41,7 +42,7 @@ let innerWidth = window.innerWidth
 // canvas.height = innerHeight
 // canvas.width = innerWidth
 
-window.addEventListener('resize', (e) => {
+window.addEventListener("resize", (e) => {
   innerHeight = window.innerHeight
   innerWidth = window.innerWidth
 
@@ -53,8 +54,8 @@ window.addEventListener('resize', (e) => {
   init()
 })
 
-window.addEventListener('keydown', (e) => {
-  if (e.key === ' ') {
+window.addEventListener("keydown", (e) => {
+  if (e.key === " ") {
     if (square.dy >= 0) {
       square.addKeyState(e.key)
     }
@@ -63,14 +64,14 @@ window.addEventListener('keydown', (e) => {
   }
 })
 
-window.addEventListener('touchstart', (e) => {
-  square.addKeyState(' ')
+window.addEventListener("touchstart", (e) => {
+  square.addKeyState(" ")
 })
-window.addEventListener('touchend', (e) => {
-  square.removeKeyState(' ')
+window.addEventListener("touchend", (e) => {
+  square.removeKeyState(" ")
 })
 
-window.addEventListener('keyup', (e) => {
+window.addEventListener("keyup", (e) => {
   square.removeKeyState(e.key)
 })
 
@@ -91,7 +92,7 @@ function findClosestShape(x: number, y: number): Shape | null {
 
 let shapes: Shape[] = []
 
-const square = new Shape(10, innerHeight - 100, 40, 40, 'red', 0, 0)
+const square = new Shape(10, innerHeight - 100, 40, 40, "red", 0, 0)
 
 function init() {
   shapes = []
@@ -124,7 +125,7 @@ function init() {
       innerHeight - 195,
       195,
       innerWidth + 1,
-      'transparent',
+      "transparent",
       0,
       0,
       0
@@ -150,7 +151,7 @@ function generateRandomMovingShape() {
 
 const backgroundImage = new Image()
 backgroundImage.src =
-  'https://img.freepik.com/free-vector/autumn-landscape-background_1012-302.jpg?w=2000&t=st=1682620326~exp=1682620926~hmac=ab958d510de1c3f3a4b38c369141ae3cc591d26a41c794e1a47c4851a6ddb9bc'
+  "https://img.freepik.com/free-vector/autumn-landscape-background_1012-302.jpg?w=2000&t=st=1682620326~exp=1682620926~hmac=ab958d510de1c3f3a4b38c369141ae3cc591d26a41c794e1a47c4851a6ddb9bc"
 
 backgroundImage.onload = () => {
   drawImage()
@@ -179,14 +180,14 @@ function drawImage() {
 
   const x = getImageX()
   const y = square.y - 100 > 0 ? square.y - 100 : 0
-  console.log('image coords', {
+  console.log("image coords", {
     x,
     y,
     backgroundImage: {
       width: backgroundImage.width,
-      height: backgroundImage.height
+      height: backgroundImage.height,
     },
-    canvas: { width: canvas.width, height: canvas.height }
+    canvas: { width: canvas.width, height: canvas.height },
   })
   ctx.drawImage(
     backgroundImage,
@@ -236,7 +237,7 @@ function draw() {
       0,
       2 * Math.PI
     )
-    ctx.fillStyle = 'black'
+    ctx.fillStyle = "black"
     ctx.stroke()
     if (square.isJumping) {
       ctx.beginPath()
@@ -245,7 +246,7 @@ function draw() {
         closestShape.x + closestShape.width / 2,
         closestShape.y + closestShape.height / 2
       )
-      ctx.strokeStyle = 'black'
+      ctx.strokeStyle = "black"
       ctx.stroke()
     }
   }
