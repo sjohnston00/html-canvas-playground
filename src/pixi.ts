@@ -40,7 +40,7 @@ async function main() {
 
   const sheet = await PIXI.Assets.load("punkSpriteSheet")
   let sprite = new PIXI.AnimatedSprite(sheet.animations["idle"])
-  sprite.animationSpeed = 0.1
+  sprite.animationSpeed = 0.088
   sprite.play()
   sprite.x = app.view.width / 2
   sprite.y = app.view.height / 2
