@@ -1,25 +1,409 @@
 {
   "frames": {
-    "idle1.png": {
+    "attack1_1": {
       "frame": { "x": 0, "y": 0, "w": 48, "h": 48 },
       "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
       "sourceSize": { "w": 48, "h": 48 },
       "anchor": { "x": 0, "y": 0 }
     },
-    "idle2.png": {
+    "attack1_2": {
       "frame": { "x": 48, "y": 0, "w": 48, "h": 48 },
       "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
       "sourceSize": { "w": 48, "h": 48 },
       "anchor": { "x": 0, "y": 0 }
     },
-    "idle3.png": {
+    "attack1_3": {
       "frame": { "x": 96, "y": 0, "w": 48, "h": 48 },
       "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
       "sourceSize": { "w": 48, "h": 48 },
       "anchor": { "x": 0, "y": 0 }
     },
-    "idle4.png": {
+    "attack1_4": {
       "frame": { "x": 144, "y": 0, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack1_5": {
+      "frame": { "x": 192, "y": 0, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack1_6": {
+      "frame": { "x": 240, "y": 0, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack2_1": {
+      "frame": { "x": 0, "y": 48, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack2_2": {
+      "frame": { "x": 48, "y": 48, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack2_3": {
+      "frame": { "x": 96, "y": 48, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack2_4": {
+      "frame": { "x": 144, "y": 48, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack2_5": {
+      "frame": { "x": 192, "y": 48, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack2_6": {
+      "frame": { "x": 240, "y": 48, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack2_7": {
+      "frame": { "x": 288, "y": 48, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack2_8": {
+      "frame": { "x": 336, "y": 48, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack3_1": {
+      "frame": { "x": 0, "y": 96, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack3_2": {
+      "frame": { "x": 48, "y": 96, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack3_3": {
+      "frame": { "x": 96, "y": 96, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack3_4": {
+      "frame": { "x": 144, "y": 96, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack3_5": {
+      "frame": { "x": 192, "y": 96, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack3_6": {
+      "frame": { "x": 240, "y": 96, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack3_7": {
+      "frame": { "x": 288, "y": 96, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "attack3_8": {
+      "frame": { "x": 336, "y": 96, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "climb_1": {
+      "frame": { "x": 0, "y": 144, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "climb_2": {
+      "frame": { "x": 48, "y": 144, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "climb_3": {
+      "frame": { "x": 96, "y": 144, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "climb_4": {
+      "frame": { "x": 144, "y": 144, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "climb_5": {
+      "frame": { "x": 192, "y": 144, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "climb_6": {
+      "frame": { "x": 240, "y": 144, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "death_1": {
+      "frame": { "x": 0, "y": 192, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "death_2": {
+      "frame": { "x": 48, "y": 192, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "death_3": {
+      "frame": { "x": 96, "y": 192, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "death_4": {
+      "frame": { "x": 144, "y": 192, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "death_5": {
+      "frame": { "x": 192, "y": 192, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "death_6": {
+      "frame": { "x": 240, "y": 192, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "doubleJump_1": {
+      "frame": { "x": 0, "y": 240, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "doubleJump_2": {
+      "frame": { "x": 48, "y": 240, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "doubleJump_3": {
+      "frame": { "x": 96, "y": 240, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "doubleJump_4": {
+      "frame": { "x": 144, "y": 240, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "doubleJump_5": {
+      "frame": { "x": 192, "y": 240, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "doubleJump_6": {
+      "frame": { "x": 240, "y": 240, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "hurt_1": {
+      "frame": { "x": 0, "y": 288, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "hurt_2": {
+      "frame": { "x": 48, "y": 288, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "idle_1": {
+      "frame": { "x": 0, "y": 336, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "idle_2": {
+      "frame": { "x": 48, "y": 336, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "idle_3": {
+      "frame": { "x": 96, "y": 336, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "idle_4": {
+      "frame": { "x": 144, "y": 336, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "jump_1": {
+      "frame": { "x": 0, "y": 384, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "jump_2": {
+      "frame": { "x": 48, "y": 384, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "jump_3": {
+      "frame": { "x": 96, "y": 384, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "jump_4": {
+      "frame": { "x": 144, "y": 384, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "kick_1": {
+      "frame": { "x": 0, "y": 432, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "kick_2": {
+      "frame": { "x": 48, "y": 432, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "kick_3": {
+      "frame": { "x": 96, "y": 432, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "kick_4": {
+      "frame": { "x": 144, "y": 432, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "kick_5": {
+      "frame": { "x": 192, "y": 432, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "kick_6": {
+      "frame": { "x": 240, "y": 432, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "run_1": {
+      "frame": { "x": 0, "y": 480, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "run_2": {
+      "frame": { "x": 48, "y": 480, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "run_3": {
+      "frame": { "x": 96, "y": 480, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "run_4": {
+      "frame": { "x": 144, "y": 480, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "run_5": {
+      "frame": { "x": 192, "y": 480, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "run_6": {
+      "frame": { "x": 240, "y": 480, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "runAttack_1": {
+      "frame": { "x": 0, "y": 528, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "runAttack_2": {
+      "frame": { "x": 48, "y": 528, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "runAttack_3": {
+      "frame": { "x": 96, "y": 528, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "runAttack_4": {
+      "frame": { "x": 144, "y": 528, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "runAttack_5": {
+      "frame": { "x": 192, "y": 528, "w": 48, "h": 48 },
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+      "sourceSize": { "w": 48, "h": 48 },
+      "anchor": { "x": 0, "y": 0 }
+    },
+    "runAttack_6": {
+      "frame": { "x": 240, "y": 528, "w": 48, "h": 48 },
       "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
       "sourceSize": { "w": 48, "h": 48 },
       "anchor": { "x": 0, "y": 0 }
@@ -27,13 +411,63 @@
   },
 
   "animations": {
-    "idle": ["idle1.png", "idle2.png", "idle3.png", "idle4.png"]
+    "attack1": [
+      "attack1_1",
+      "attack1_2",
+      "attack1_3",
+      "attack1_4",
+      "attack1_5",
+      "attack1_6"
+    ],
+    "attack2": [
+      "attack2_1",
+      "attack2_2",
+      "attack2_3",
+      "attack2_4",
+      "attack2_5",
+      "attack2_6",
+      "attack2_7",
+      "attack2_8"
+    ],
+    "attack3": [
+      "attack3_1",
+      "attack3_2",
+      "attack3_3",
+      "attack3_4",
+      "attack3_5",
+      "attack3_6",
+      "attack3_7",
+      "attack3_8"
+    ],
+    "climb": ["climb_1", "climb_2", "climb_3", "climb_4", "climb_5", "climb_6"],
+    "death": ["death_1", "death_2", "death_3", "death_4", "death_5", "death_6"],
+    "doubleJump": [
+      "doubleJump_1",
+      "doubleJump_2",
+      "doubleJump_3",
+      "doubleJump_4",
+      "doubleJump_5",
+      "doubleJump_6"
+    ],
+    "hurt": ["hurt_1", "hurt_2"],
+    "idle": ["idle_1", "idle_2", "idle_3", "idle_4"],
+    "jump": ["jump_1", "jump_2", "jump_3", "jump_4"],
+    "kick": ["kick_1", "kick_2", "kick_3", "kick_4", "kick_5", "kick_6"],
+    "run": ["run_1", "run_2", "run_3", "run_4", "run_5", "run_6"],
+    "runAttack": [
+      "runAttack_1",
+      "runAttack_2",
+      "runAttack_3",
+      "runAttack_4",
+      "runAttack_5",
+      "runAttack_6"
+    ]
   },
 
   "meta": {
-    "image": "Punk_idle.png",
+    "image": "Spritesheet.png",
     "format": "RGBA8888",
-    "size": { "w": 192, "h": 48 },
+    "size": { "w": 384, "h": 576 },
     "scale": "1"
   }
 }
