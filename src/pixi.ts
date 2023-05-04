@@ -14,27 +14,60 @@ async function main() {
 
   // const textures = await PIXI.Assets.load(["punkSpriteSheetPNG"])
 
+  let currAnimationIndex = 0
   const sheet = await PIXI.Assets.load("punkSpriteSheet")
+  console.log(sheet)
 
-  let sprite = new PIXI.AnimatedSprite(sheet.animations["idle"])
+  const SCALE = 3
+
+  let sprite = new PIXI.AnimatedSprite(
+    sheet.animations[Object.keys(sheet.animations)[currAnimationIndex]]
+  )
+  sprite.scale.set(SCALE, SCALE)
   sprite.animationSpeed = 0.088
   sprite.play()
-
-  sprite.x = app.view.width / 2
+  sprite.x = app.view.width / 3
   sprite.y = app.view.height / 2
   sprite.anchor.set(0.5)
   app.stage.addChild(sprite)
 
+  let sprite2 = new PIXI.AnimatedSprite(
+    sheet.animations[Object.keys(sheet.animations)[currAnimationIndex]]
+  )
+  sprite2.scale.set(SCALE * -1, SCALE)
+  sprite2.animationSpeed = 0.088
+  sprite2.play()
+  sprite2.x = app.view.width / 2
+  sprite2.y = app.view.height / 2
+  sprite2.anchor.set(0.5)
+  app.stage.addChild(sprite2)
+
   // Add a ticker callback to move the sprite back and forth
   let elapsed = 0.0
-  let currAnimationIndex = 0
+  const seconds = 2
+  const ms = seconds * 100
+
   app.ticker.add((delta) => {
     elapsed += delta
-    if (elapsed > 200) {
+    console.log(
+      `sheet.animations[${Object.keys(sheet.animations)[currAnimationIndex]}]`
+    )
+    if (elapsed > ms) {
       elapsed = 0
-      //TODO: Every 2 seconds swap the texture to another animation
+      if (currAnimationIndex < Object.keys(sheet.animations).length - 1) {
+        currAnimationIndex++
+      } else {
+        currAnimationIndex = 0
+      }
+      sprite.stop()
+      sprite2.stop()
+      sprite.textures =
+        sheet.animations[Object.keys(sheet.animations)[currAnimationIndex]]
+      sprite2.textures =
+        sheet.animations[Object.keys(sheet.animations)[currAnimationIndex]]
+      sprite.play()
+      sprite2.play()
     }
-    // sprite.x = 100.0 + Math.cos(elapsed / 50.0) * 100.0
   })
 }
 

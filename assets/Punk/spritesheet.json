@@ -441,6 +441,9 @@
     ],
     "climb": ["climb_1", "climb_2", "climb_3", "climb_4", "climb_5", "climb_6"],
     "death": ["death_1", "death_2", "death_3", "death_4", "death_5", "death_6"],
+    "hurt": ["hurt_1", "hurt_2"],
+    "idle": ["idle_1", "idle_2", "idle_3", "idle_4"],
+    "jump": ["jump_1", "jump_2", "jump_3", "jump_4"],
     "doubleJump": [
       "doubleJump_1",
       "doubleJump_2",
@@ -449,9 +452,6 @@
       "doubleJump_5",
       "doubleJump_6"
     ],
-    "hurt": ["hurt_1", "hurt_2"],
-    "idle": ["idle_1", "idle_2", "idle_3", "idle_4"],
-    "jump": ["jump_1", "jump_2", "jump_3", "jump_4"],
     "kick": ["kick_1", "kick_2", "kick_3", "kick_4", "kick_5", "kick_6"],
     "run": ["run_1", "run_2", "run_3", "run_4", "run_5", "run_6"],
     "runAttack": [
