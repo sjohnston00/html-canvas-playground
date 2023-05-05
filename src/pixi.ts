@@ -2,6 +2,8 @@ import * as PIXI from "pixijs"
 
 async function main() {
   const app = new PIXI.Application({
+    // width: window.innerWidth,
+    // height: window.innerHeight,
     width: 640,
     height: 360,
     background: "#444444",
@@ -42,13 +44,75 @@ async function main() {
   sprite2.anchor.set(0.5)
   app.stage.addChild(sprite2)
 
+  type Bullet = {
+    bullet: PIXI.Graphics
+    reversed: boolean
+    speed: number
+  }
+
   // Add a ticker callback to move the sprite back and forth
+
+  let bullets: Bullet[] = []
+
   let elapsed = 0.0
   const seconds = 2
   const ms = seconds * 100
 
+  let elapsed2 = 0
+
+  // console.log(app.stage._bounds.)
+
   app.ticker.add((delta) => {
+    elapsed2 += (1 / 60) * delta
+
+    console.log(elapsed2)
+    console.log(bullets)
+
     elapsed += delta
+
+    for (let index = 0; index < bullets.length; index++) {
+      const { bullet, reversed, speed } = bullets[index]
+      if (reversed) {
+        bullet.x -= speed
+      } else {
+        bullet.x += speed
+      }
+
+      //NOTE: The x,y position is relative on the original position it was set at not the position on the canvas
+      //e.g original position is x=10 if we do x -=1 the new x position is now -1 not 9
+      if (reversed && bullet.x < -app.view.width - bullet.width) {
+        bullet.destroy()
+        bullets.splice(index, 1)
+        index--
+        continue
+      }
+      if (!reversed && bullet.x > app.view.width) {
+        bullet.destroy()
+        bullets.splice(index, 1)
+        index--
+        continue
+      }
+    }
+    if (elapsed2 > 0.1) {
+      const newBullet = new PIXI.Graphics()
+      const reversed = Math.random() > 0.5
+      const speed = randomIntBetween(5, 10)
+      // const reversed = true
+      console.log({ reversed })
+
+      const height = 5
+      const width = 20
+
+      const y = randomIntBetween(10, app.view.height - height)
+      const x = reversed ? app.view.width : 0 - width
+      newBullet.beginFill(0xff00ff)
+      newBullet.drawRect(x, y, width, height)
+      newBullet.endFill()
+      bullets.push({ bullet: newBullet, reversed, speed })
+
+      app.stage.addChild(newBullet)
+      elapsed2 = 0
+    }
     console.log(
       `sheet.animations[${Object.keys(sheet.animations)[currAnimationIndex]}]`
     )
@@ -69,6 +133,11 @@ async function main() {
       sprite2.play()
     }
   })
+}
+
+function randomIntBetween(min: number, max: number) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
 main()
