@@ -1,6 +1,6 @@
-import * as PIXI from 'pixijs'
+import * as PIXI from "pixijs"
 
-const gameDiv = document.getElementById('game') as HTMLDivElement
+const gameDiv = document.getElementById("game") as HTMLDivElement
 
 async function main() {
   const app = new PIXI.Application({
@@ -8,17 +8,17 @@ async function main() {
     // height: window.innerHeight,
     width: 640,
     height: 360,
-    background: '#444444'
+    background: "#444444",
   })
   gameDiv.appendChild(app.view)
 
-  PIXI.Assets.add('punkSpriteSheet', 'assets/Punk/spritesheet.json')
-  PIXI.Assets.add('punkSpriteSheetPNG', 'assets/Punk/Spritesheet.png')
+  PIXI.Assets.add("punkSpriteSheet", "assets/Punk/spritesheet.json")
+  PIXI.Assets.add("punkSpriteSheetPNG", "assets/Punk/Spritesheet.png")
 
   // const textures = await PIXI.Assets.load(["punkSpriteSheetPNG"])
 
   let currAnimationIndex = 0
-  const sheet = await PIXI.Assets.load('punkSpriteSheet')
+  const sheet = await PIXI.Assets.load("punkSpriteSheet")
 
   const SCALE = 1.5
 
@@ -45,7 +45,7 @@ async function main() {
   app.stage.addChild(sprite2)
 
   type Bullet = {
-    bullet: PIXI.Sprite
+    bullet: PIXI.Graphics
     reversed: boolean
     speed: number
   }
@@ -74,7 +74,7 @@ async function main() {
   const player = new PIXI.Sprite(playerTexture)
   app.stage.addChild(player)
 
-  gameDiv.addEventListener('mousemove', (e) => {
+  gameDiv.addEventListener("mousemove", (e) => {
     if (e.offsetY - player.height / 2 < 0) {
       player.y = 0
     } else if (e.offsetY + player.height / 2 > app.view.height) {
@@ -96,6 +96,9 @@ async function main() {
 
   // console.log(app.stage._bounds.)
 
+  const newBulletGraphic = new PIXI.Graphics()
+
+  const newBulletTexture = app.renderer.generateTexture(newBulletGraphic)
   app.ticker.add((delta) => {
     console.log(bullets)
 
@@ -107,11 +110,10 @@ async function main() {
     elapsed += delta
 
     for (let index = 0; index < bullets.length; index++) {
-      const { bullet, reversed, speed } = bullets[index]
-      if (reversed) {
-        bullet.x -= speed
+      if (bullets[index].reversed) {
+        bullets[index].bullet.x -= bullets[index].speed
       } else {
-        bullet.x += speed
+        bullets[index].bullet.x += bullets[index].speed
       }
 
       // if (bullet.x < player. ) {
@@ -119,14 +121,20 @@ async function main() {
 
       //NOTE: The x,y position is relative on the original position it was set at not the position on the canvas
       //e.g original position is x=10 if we do x -=1 the new x position is now -1 not 9
-      if (reversed && bullet.x < -app.view.width - bullet.width) {
-        bullet.destroy()
+      if (
+        bullets[index].reversed &&
+        bullets[index].bullet.x < -app.view.width - bullets[index].bullet.width
+      ) {
+        bullets[index].bullet.destroy()
         bullets.splice(index, 1)
         index--
         continue
       }
-      if (!reversed && bullet.x > app.view.width) {
-        bullet.destroy()
+      if (
+        !bullets[index].reversed &&
+        bullets[index].bullet.x > app.view.width
+      ) {
+        bullets[index].bullet.destroy()
         bullets.splice(index, 1)
         index--
         continue
@@ -147,12 +155,16 @@ async function main() {
       newBulletGraphic.drawRect(x, y, width, height)
       newBulletGraphic.endFill()
 
-      const newBulletTexture = app.renderer.generateTexture(newBulletGraphic)
-      const bullet = new PIXI.Sprite(newBulletTexture)
-
-      bullets.push({ bullet, reversed, speed })
+      // const bullet = new PIXI.Sprite(newBulletTexture)
+      // bullet.position.set(x, y)
+      // bullet.x = x
+      // bullet.y = y
+      // bullet.width = width
+      // bullet.height = height
 
       app.stage.addChild(newBulletGraphic)
+      bullets.push({ bullet: newBulletGraphic, reversed, speed })
+
       elapsed2 = 0
     }
     // console.log(
