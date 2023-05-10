@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "esbuild src/index.ts --bundle --minify --target=es6 --outdir=build",
-    "dev": "esbuild src/index.ts --bundle --minify --target=es6 --watch --sourcemap --outdir=build",
-    "dev:p": "esbuild src/pixi.ts --bundle --minify --target=es6 --watch --sourcemap --outdir=build",
+    "dev": "esbuild src/index.ts --bundle --target=es6 --watch --sourcemap --outdir=build",
+    "dev:p": "esbuild src/pixi.ts --bundle --target=es6 --watch --sourcemap --outdir=build",
     "tsc:build": "tsc",
     "tsc:dev": "tsc --watch"
   },

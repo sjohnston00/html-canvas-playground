@@ -72,6 +72,7 @@ async function main() {
 
   const playerTexture = app.renderer.generateTexture(playerGraphic)
   const player = new PIXI.Sprite(playerTexture)
+  // player.anchor.set(0.5)
   app.stage.addChild(player)
 
   gameDiv.addEventListener("mousemove", (e) => {
@@ -90,17 +91,14 @@ async function main() {
     } else {
       player.x = e.offsetX - player.width / 2
     }
-
-    console.log(player)
   })
 
   // console.log(app.stage._bounds.)
 
   const newBulletGraphic = new PIXI.Graphics()
 
-  const newBulletTexture = app.renderer.generateTexture(newBulletGraphic)
   app.ticker.add((delta) => {
-    console.log(bullets)
+    // console.log(bullets)
 
     elapsed2 += (1 / 60) * delta
 
@@ -110,10 +108,36 @@ async function main() {
     elapsed += delta
 
     for (let index = 0; index < bullets.length; index++) {
-      if (bullets[index].reversed) {
-        bullets[index].bullet.x -= bullets[index].speed
+      //TODO: Check the bullet is colliding with the player
+      //if it is destroy it and splice the arary
+
+      const { bullet, reversed, speed } = bullets[index]
+
+      const {
+        x: playerX,
+        y: playerY,
+        height: playerHeight,
+        width: playerWidth,
+      } = player
+
+      if (
+        bullet.x + bullet.width > playerX &&
+        bullet.x + bullet.width < playerX + playerWidth &&
+        bullet.y < playerY + playerHeight &&
+        bullet.y + bullet.height > playerY
+      ) {
+        console.log("colliding left side")
+
+        bullet.destroy()
+        bullets.splice(index, 1)
+        index--
+        continue
+      }
+
+      if (reversed) {
+        bullet.x -= speed
       } else {
-        bullets[index].bullet.x += bullets[index].speed
+        bullet.x += speed
       }
 
       // if (bullet.x < player. ) {
@@ -121,20 +145,14 @@ async function main() {
 
       //NOTE: The x,y position is relative on the original position it was set at not the position on the canvas
       //e.g original position is x=10 if we do x -=1 the new x position is now -1 not 9
-      if (
-        bullets[index].reversed &&
-        bullets[index].bullet.x < -app.view.width - bullets[index].bullet.width
-      ) {
-        bullets[index].bullet.destroy()
+      if (reversed && bullet.x < -app.view.width - bullet.width) {
+        bullet.destroy()
         bullets.splice(index, 1)
         index--
         continue
       }
-      if (
-        !bullets[index].reversed &&
-        bullets[index].bullet.x > app.view.width
-      ) {
-        bullets[index].bullet.destroy()
+      if (!reversed && bullet.x > app.view.width) {
+        bullet.destroy()
         bullets.splice(index, 1)
         index--
         continue
@@ -150,6 +168,8 @@ async function main() {
       const width = 20
 
       const y = randomIntBetween(10, app.view.height - height)
+      console.log({ y, playerY: player.y })
+
       const x = reversed ? app.view.width : 0 - width
       newBulletGraphic.beginFill(0xff00ff)
       newBulletGraphic.drawRect(x, y, width, height)
