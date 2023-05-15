@@ -97,6 +97,8 @@ async function main() {
 
   const newBulletGraphic = new PIXI.Graphics()
 
+  let hitBullets = 0
+
   app.ticker.add((delta) => {
     // console.log(bullets)
 
@@ -109,9 +111,13 @@ async function main() {
 
     for (let index = 0; index < bullets.length; index++) {
       //TODO: Check the bullet is colliding with the player
-      //if it is destroy it and splice the arary
+      //if it is, destroy it and splice the arary
 
       const { bullet, reversed, speed } = bullets[index]
+
+      const bulletBounds = bullet.getBounds()
+      const bulletX = bulletBounds.x
+      const bulletY = bulletBounds.y
 
       const {
         x: playerX,
@@ -121,12 +127,21 @@ async function main() {
       } = player
 
       if (
-        bullet.x + bullet.width > playerX &&
-        bullet.x + bullet.width < playerX + playerWidth &&
-        bullet.y < playerY + playerHeight &&
-        bullet.y + bullet.height > playerY
+        !reversed &&
+        bulletX + bullet.width > playerX &&
+        bulletX + bullet.width < playerX + playerWidth &&
+        bulletY < playerY + playerHeight &&
+        bulletY + bullet.height > playerY
       ) {
         console.log("colliding left side")
+        hitBullets++
+
+        const count = document.getElementById("count")
+
+        if (count) {
+          count.textContent = hitBullets.toString()
+        }
+        console.log(hitBullets)
 
         bullet.destroy()
         bullets.splice(index, 1)
