@@ -1,16 +1,16 @@
 import * as PIXI from "pixi.js"
 
 const gameDiv = document.getElementById("game") as HTMLDivElement
-const count = document.getElementById("count")
 
 async function main() {
   const app = new PIXI.Application<HTMLCanvasElement>({
     // width: window.innerWidth,
     // height: window.innerHeight,
-    // resolution: Math.max(window.devicePixelRatio, 2),
-    // resizeTo: window,
-    width: 640,
-    height: 360,
+    resolution: Math.max(window.devicePixelRatio, 2),
+    autoDensity: true,
+    resizeTo: window,
+    // width: window.innerHeight,
+    // height: window.innerWidth,
     background: "#444444",
     antialias: true,
     hello: true,
@@ -56,6 +56,7 @@ async function main() {
     bullet: PIXI.Graphics
     reversed: boolean
     speed: number
+    isGold: boolean
   }
 
   // Add a ticker callback to move the sprite back and forth
@@ -101,19 +102,77 @@ async function main() {
     }
   })
 
-  // console.log(app.stage._bounds.)
+  let hitBullets = Number(window.localStorage.getItem("hits")) || 0
+  let timeSinceLastHit = Date.now()
+  let timeSinceLastHitGold = Date.now()
 
-  const newBulletGraphic = new PIXI.Graphics()
+  const FPS_Text = new PIXI.Text("FPS: 0", {
+    fontSize: "0.9rem",
+    fill: "#ffffff",
+    padding: 10,
+  })
+  FPS_Text.x = 8
+  FPS_Text.y = 8
 
-  let hitBullets = 0
+  const hitBulletsText = new PIXI.Text(`Hits: ${hitBullets}`, {
+    fontSize: "0.9rem",
+    fill: "#ffffff",
+    padding: 10,
+  })
+
+  // hitBulletsText.anchor.set(1, 0)
+  hitBulletsText.x = FPS_Text.x + FPS_Text.width + 24
+  hitBulletsText.y = 8
+
+  const timeSinceLastHitText = new PIXI.Text(
+    `Time Since Last Hit: ${((Date.now() - timeSinceLastHit) / 1000).toFixed(
+      1
+    )}s`,
+    {
+      fontSize: "0.9rem",
+      fill: "#ffffff",
+      padding: 10,
+    }
+  )
+
+  timeSinceLastHitText.x = hitBulletsText.x + hitBulletsText.width + 24
+  timeSinceLastHitText.y = 8
+
+  const timeSinceLastHitGoldText = new PIXI.Text(
+    `Time Since Last Hit Gold: ${(
+      (Date.now() - timeSinceLastHitGold) /
+      1000
+    ).toFixed(1)}s`,
+    {
+      fontSize: "0.9rem",
+      fill: "#ffffff",
+      padding: 10,
+    }
+  )
+
+  timeSinceLastHitGoldText.x =
+    timeSinceLastHitText.x + timeSinceLastHitText.width + 24
+  timeSinceLastHitGoldText.y = 8
+
+  app.stage.addChild(FPS_Text)
+  app.stage.addChild(hitBulletsText)
+  app.stage.addChild(timeSinceLastHitText)
+  app.stage.addChild(timeSinceLastHitGoldText)
 
   app.ticker.add((delta) => {
-    // console.log(bullets)
+    FPS_Text.text = `FPS: ${Math.floor(app.ticker.FPS).toString()}`
+    hitBulletsText.text = `Hits: ${Math.floor(hitBullets).toString()}`
+    timeSinceLastHitText.text = `Time Since Last Hit: ${(
+      (Date.now() - timeSinceLastHit) /
+      1000
+    ).toFixed(1)}s`
+
+    timeSinceLastHitGoldText.text = `Time Since Last Hit Gold: ${(
+      (Date.now() - timeSinceLastHitGold) /
+      1000
+    ).toFixed(1)}s`
 
     elapsed2 += (1 / 60) * delta
-
-    // console.log(elapsed2)
-    // console.log(bullets)
 
     elapsed += delta
 
@@ -121,7 +180,7 @@ async function main() {
       //TODO: Check the bullet is colliding with the player
       //if it is, destroy it and splice the arary
 
-      const { bullet, reversed, speed } = bullets[index]
+      const { bullet, reversed, speed, isGold } = bullets[index]
 
       const bulletBounds = bullet.getBounds()
       const bulletX = bulletBounds.x
@@ -141,14 +200,18 @@ async function main() {
         bulletY < playerY + playerHeight &&
         bulletY + bullet.height > playerY
       ) {
-        //colliding left side
-        hitBullets++
-
-        if (count) {
-          count.textContent = hitBullets.toString()
+        player.height++
+        timeSinceLastHit = Date.now()
+        if (isGold) {
+          player.height += 10
+          timeSinceLastHitGold = Date.now()
+          hitBullets += 10
+        } else {
+          hitBullets++
         }
-        console.log(hitBullets)
 
+        window.localStorage.setItem("hits", hitBullets.toString())
+        //colliding left side
         bullet.destroy()
         bullets.splice(index, 1)
         index--
@@ -162,14 +225,18 @@ async function main() {
         bulletY < playerY + playerHeight &&
         bulletY + bullet.height > playerY
       ) {
-        //colliding right side
-        hitBullets++
-
-        if (count) {
-          count.textContent = hitBullets.toString()
+        player.height++
+        timeSinceLastHit = Date.now()
+        if (isGold) {
+          player.height += 10
+          timeSinceLastHitGold = Date.now()
+          hitBullets += 10
+        } else {
+          hitBullets++
         }
-        console.log(hitBullets)
 
+        window.localStorage.setItem("hits", hitBullets.toString())
+        //colliding right side
         bullet.destroy()
         bullets.splice(index, 1)
         index--
@@ -188,12 +255,14 @@ async function main() {
       //NOTE: The x,y position is relative on the original position it was set at not the position on the canvas
       //e.g original position is x=10 if we do x -=1 the new x position is now -1 not 9
       if (reversed && bullet.x < -app.view.width - bullet.width) {
+        bullet.renderable = false
         bullet.destroy()
         bullets.splice(index, 1)
         index--
         continue
       }
       if (!reversed && bullet.x > app.view.width) {
+        bullet.renderable = false
         bullet.destroy()
         bullets.splice(index, 1)
         index--
@@ -203,17 +272,15 @@ async function main() {
     if (elapsed2 > 0.1) {
       const newBulletGraphic = new PIXI.Graphics()
       const reversed = Math.random() > 0.5
+      const isGold = Math.random() > 0.9
       const speed = randomIntBetween(5, 10)
-      // console.log({ reversed })
 
       const height = 5
       const width = 20
 
       const y = randomIntBetween(10, app.view.height - height)
-      console.log({ y, playerY: player.y })
-
       const x = reversed ? app.view.width : 0 - width
-      newBulletGraphic.beginFill("#ff00ff")
+      newBulletGraphic.beginFill(isGold ? "#FFD700" : "#ff00ff")
       newBulletGraphic.drawRect(x, y, width, height)
       newBulletGraphic.endFill()
 
@@ -225,7 +292,12 @@ async function main() {
       // bullet.height = height
 
       app.stage.addChild(newBulletGraphic)
-      bullets.push({ bullet: newBulletGraphic, reversed, speed })
+      bullets.push({
+        bullet: newBulletGraphic,
+        reversed,
+        speed: isGold ? speed * 3 : speed,
+        isGold,
+      })
 
       elapsed2 = 0
     }
@@ -252,10 +324,11 @@ async function main() {
 
   window.addEventListener("keypress", (e) => {
     if (e.key === "r" || e.key === "R") {
+      player.height = playerHeight
       hitBullets = 0
-      if (count) {
-        count.textContent = hitBullets.toString()
-      }
+      window.localStorage.setItem("hits", "0")
+      timeSinceLastHit = Date.now()
+      timeSinceLastHitGold = Date.now()
     }
   })
 }
