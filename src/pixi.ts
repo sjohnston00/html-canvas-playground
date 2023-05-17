@@ -1,16 +1,23 @@
-import * as PIXI from "pixijs"
+import * as PIXI from "pixi.js"
 
 const gameDiv = document.getElementById("game") as HTMLDivElement
 const count = document.getElementById("count")
 
 async function main() {
-  const app = new PIXI.Application({
+  const app = new PIXI.Application<HTMLCanvasElement>({
     // width: window.innerWidth,
     // height: window.innerHeight,
+    // resolution: Math.max(window.devicePixelRatio, 2),
+    // resizeTo: window,
     width: 640,
     height: 360,
     background: "#444444",
+    antialias: true,
+    hello: true,
+    powerPreference: "high-performance",
   })
+  //@ts-expect-error
+  globalThis.__PIXI_APP__ = app
   gameDiv.appendChild(app.view)
 
   PIXI.Assets.add("punkSpriteSheet", "assets/Punk/spritesheet.json")
@@ -134,7 +141,28 @@ async function main() {
         bulletY < playerY + playerHeight &&
         bulletY + bullet.height > playerY
       ) {
-        console.log("colliding left side")
+        //colliding left side
+        hitBullets++
+
+        if (count) {
+          count.textContent = hitBullets.toString()
+        }
+        console.log(hitBullets)
+
+        bullet.destroy()
+        bullets.splice(index, 1)
+        index--
+        continue
+      }
+
+      if (
+        reversed &&
+        bulletX > playerX &&
+        bulletX < playerX + playerWidth &&
+        bulletY < playerY + playerHeight &&
+        bulletY + bullet.height > playerY
+      ) {
+        //colliding right side
         hitBullets++
 
         if (count) {

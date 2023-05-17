@@ -26,6 +26,6 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "pixijs": "^7.1.4"
+    "pixi.js": "^7.2.4"
   }
 }
