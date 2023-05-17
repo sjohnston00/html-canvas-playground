@@ -194,13 +194,7 @@ async function main() {
         width: playerWidth,
       } = player
 
-      if (
-        !reversed &&
-        bulletX + bullet.width > playerX &&
-        bulletX + bullet.width < playerX + playerWidth &&
-        bulletY < playerY + playerHeight &&
-        bulletY + bullet.height > playerY
-      ) {
+      if (isIntersecting(bullet, player)) {
         player.height++
         timeSinceLastHit = Date.now()
         if (isGold) {
@@ -213,31 +207,6 @@ async function main() {
 
         window.localStorage.setItem("hits", hitBullets.toString())
         //colliding left side
-        bullet.destroy()
-        bullets.splice(index, 1)
-        index--
-        continue
-      }
-
-      if (
-        reversed &&
-        bulletX > playerX &&
-        bulletX < playerX + playerWidth &&
-        bulletY < playerY + playerHeight &&
-        bulletY + bullet.height > playerY
-      ) {
-        player.height++
-        timeSinceLastHit = Date.now()
-        if (isGold) {
-          player.height += 10
-          timeSinceLastHitGold = Date.now()
-          hitBullets += 10
-        } else {
-          hitBullets++
-        }
-
-        window.localStorage.setItem("hits", hitBullets.toString())
-        //colliding right side
         bullet.destroy()
         bullets.splice(index, 1)
         index--
@@ -302,9 +271,7 @@ async function main() {
 
       elapsed2 = 0
     }
-    // console.log(
-    //   `sheet.animations[${Object.keys(sheet.animations)[currAnimationIndex]}]`
-    // )
+
     if (elapsed > ms) {
       elapsed = 0
       if (currAnimationIndex < Object.keys(sheet.animations).length - 1) {
@@ -338,6 +305,17 @@ async function main() {
 function randomIntBetween(min: number, max: number) {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+function isIntersecting(a: PIXI.Container, b: PIXI.Container) {
+  const ab = a.getBounds()
+  const bb = b.getBounds()
+  return (
+    ab.x + ab.width > bb.x &&
+    ab.x < bb.x + bb.width &&
+    ab.y + ab.height > bb.y &&
+    ab.y < bb.y + bb.height
+  )
 }
 
 main()
