@@ -74,7 +74,7 @@ async function main() {
 
   const playerY = 0
   const playerX = 0
-  playerGraphic.beginFill(0xffffff)
+  playerGraphic.beginFill("#ffffff")
   playerGraphic.drawRect(playerX, playerY, playerWidth, playerHeight)
   playerGraphic.endFill()
 
@@ -213,7 +213,7 @@ async function main() {
       console.log({ y, playerY: player.y })
 
       const x = reversed ? app.view.width : 0 - width
-      newBulletGraphic.beginFill(0xff00ff)
+      newBulletGraphic.beginFill("#ff00ff")
       newBulletGraphic.drawRect(x, y, width, height)
       newBulletGraphic.endFill()
 
