@@ -1,6 +1,7 @@
 import * as PIXI from "pixijs"
 
 const gameDiv = document.getElementById("game") as HTMLDivElement
+const count = document.getElementById("count")
 
 async function main() {
   const app = new PIXI.Application({
@@ -136,8 +137,6 @@ async function main() {
         console.log("colliding left side")
         hitBullets++
 
-        const count = document.getElementById("count")
-
         if (count) {
           count.textContent = hitBullets.toString()
         }
@@ -220,6 +219,15 @@ async function main() {
         sheet.animations[Object.keys(sheet.animations)[currAnimationIndex]]
       sprite.play()
       sprite2.play()
+    }
+  })
+
+  window.addEventListener("keypress", (e) => {
+    if (e.key === "r" || e.key === "R") {
+      hitBullets = 0
+      if (count) {
+        count.textContent = hitBullets.toString()
+      }
     }
   })
 }
