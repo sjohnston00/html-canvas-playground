@@ -70,7 +70,9 @@ async function main() {
   let elapsed2 = 0
 
   const playerGraphic = new PIXI.Graphics()
-  const playerHeight = 50
+
+  let hitBullets = Number(window.localStorage.getItem("hits")) || 0
+  let playerHeight = 50 + hitBullets
   const playerWidth = 10
 
   const playerY = 0
@@ -102,7 +104,6 @@ async function main() {
     }
   })
 
-  let hitBullets = Number(window.localStorage.getItem("hits")) || 0
   let timeSinceLastHit = Date.now()
   let timeSinceLastHitGold = Date.now()
 
@@ -324,11 +325,12 @@ async function main() {
 
   window.addEventListener("keypress", (e) => {
     if (e.key === "r" || e.key === "R") {
-      player.height = playerHeight
       hitBullets = 0
       window.localStorage.setItem("hits", "0")
       timeSinceLastHit = Date.now()
       timeSinceLastHitGold = Date.now()
+      playerHeight = 50 + hitBullets
+      player.height = playerHeight
     }
   })
 }
