@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js"
 import { ITextStyle, TextStyle } from "pixi.js"
+import { sound } from "@pixi/sound"
 
 const gameDiv = document.getElementById("game") as HTMLDivElement
 
@@ -217,6 +218,9 @@ async function main() {
   }
 
   function loadAssets() {
+    sound.add("pop", "/assets/audio/pop.wav")
+    sound.add("gold-pop", "/assets/audio/gold-pop.mp3")
+
     PIXI.Assets.add("punkSpriteSheet", "assets/Punk/spritesheet.json")
     PIXI.Assets.add("punkSpriteSheetPNG", "assets/Punk/Spritesheet.png")
   }
@@ -284,11 +288,13 @@ async function main() {
         timeSinceLastHit = Date.now()
 
         if (isGold) {
+          sound.play("gold-pop")
           goldBulletsHit++
           player.height += 10
           timeSinceLastHitGold = Date.now()
           hitBullets += 10
         } else {
+          sound.play("pop")
           hitBullets++
         }
 
