@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js"
 import { ITextStyle, TextStyle } from "pixi.js"
-import { sound } from "@pixi/sound"
+import { sound, filters } from "@pixi/sound"
 
 const gameDiv = document.getElementById("game") as HTMLDivElement
 
@@ -167,6 +167,12 @@ async function main() {
   let goldBulletsHit = 0
 
   app.ticker.add((delta) => {
+    console.log(player._height)
+
+    if (player._height < 0) {
+      player.height = 50
+    }
+    player.height -= 0.062
     updateText()
 
     elapsed2 += (1 / 60) * delta
@@ -288,7 +294,10 @@ async function main() {
         timeSinceLastHit = Date.now()
 
         if (isGold) {
-          sound.play("gold-pop")
+          // sound.play("gold-pop")
+          sound.play("pop", {
+            filters: [new filters.DistortionFilter(0.08)],
+          })
           goldBulletsHit++
           player.height += 10
           timeSinceLastHitGold = Date.now()
