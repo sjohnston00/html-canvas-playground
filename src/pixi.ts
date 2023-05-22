@@ -153,6 +153,16 @@ async function main() {
     bulletPercentageText.x + bulletPercentageText.width + 24
   goldBulletPercentageText.y = bulletPercentageText.y
 
+  const difficultyText = new PIXI.Text(`Difficulty: easy`, textOptions)
+
+  difficultyText.x =
+    goldBulletPercentageText.x + goldBulletPercentageText.width + 24
+  difficultyText.y = goldBulletPercentageText.y
+
+  difficultyText.interactive = true
+  difficultyText.buttonMode = true
+  difficultyText.on("pointerdown", changeDifficulty)
+
   app.stage.addChild(FPS_Text)
   app.stage.addChild(hitBulletsText)
   app.stage.addChild(timeSinceLastHitText)
@@ -160,19 +170,31 @@ async function main() {
   app.stage.addChild(resetText)
   app.stage.addChild(bulletPercentageText)
   app.stage.addChild(goldBulletPercentageText)
+  app.stage.addChild(difficultyText)
+
+  const difficultyContainer = new PIXI.Container()
+  difficultyContainer.add
 
   let bulletsSpawned = 0
   let bulletsHit = 0
   let goldBulletsSpawned = 0
   let goldBulletsHit = 0
 
+  const difficulties = {
+    easy: 0.001,
+    normal: 0.062,
+    hard: 0.1,
+  }
+
+  let chossenDifficulty: keyof typeof difficulties = "easy"
+
   app.ticker.add((delta) => {
-    console.log(player._height)
+    console.log(chossenDifficulty)
 
     if (player._height < 0) {
       player.height = 50
     }
-    player.height -= 0.062
+    player.height -= difficulties[chossenDifficulty]
     updateText()
 
     elapsed2 += (1 / 60) * delta
@@ -340,6 +362,7 @@ async function main() {
   }
 
   function updateText() {
+    difficultyText.text = `Difficulty: ${chossenDifficulty}`
     FPS_Text.text = `FPS: ${Math.floor(app.ticker.FPS).toString()}`
     hitBulletsText.text = `Hits: ${Math.floor(hitBullets).toString()}`
     timeSinceLastHitText.text = `Time Since Last Hit: ${(
@@ -360,6 +383,16 @@ async function main() {
     goldBulletPercentageText.text = `Gold Bullets Hit %: ${goldBulletPercentage.toFixed(
       2
     )}%`
+  }
+  function changeDifficulty() {
+    const difficultiesKeys = Object.keys(difficulties)
+    const indexOfCurrentDifficulty = difficultiesKeys.indexOf(chossenDifficulty)
+    chossenDifficulty =
+      difficultiesKeys[
+        indexOfCurrentDifficulty === difficultiesKeys.length - 1
+          ? 0
+          : indexOfCurrentDifficulty + 1
+      ]
   }
 }
 
