@@ -363,6 +363,19 @@ async function main() {
 
   function updateText() {
     difficultyText.text = `Difficulty: ${chossenDifficulty}`
+
+    switch (chossenDifficulty) {
+      case "easy":
+        difficultyText.style.fill = "#84cc16"
+        break
+      case "normal":
+        difficultyText.style.fill = "#f59e0b"
+        break
+      case "hard":
+        difficultyText.style.fill = "#ef4444"
+        break
+    }
+
     FPS_Text.text = `FPS: ${Math.floor(app.ticker.FPS).toString()}`
     hitBulletsText.text = `Hits: ${Math.floor(hitBullets).toString()}`
     timeSinceLastHitText.text = `Time Since Last Hit: ${(
