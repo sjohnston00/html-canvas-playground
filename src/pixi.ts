@@ -1,22 +1,23 @@
-import * as PIXI from "pixi.js"
-import { ITextStyle, TextStyle } from "pixi.js"
-import { sound, filters } from "@pixi/sound"
+import * as PIXI from 'pixi.js'
+import { ITextStyle, TextStyle } from 'pixi.js'
+import { sound, filters } from '@pixi/sound'
 
-const gameDiv = document.getElementById("game") as HTMLDivElement
+const gameDiv = document.getElementById('game') as HTMLDivElement
 
 async function main() {
+  const scale = Math.max(window.devicePixelRatio, 2)
   const app = new PIXI.Application<HTMLCanvasElement>({
     // width: window.innerWidth,
     // height: window.innerHeight,
-    resolution: Math.max(window.devicePixelRatio, 2),
+    resolution: scale,
     autoDensity: true,
     resizeTo: window,
     // width: window.innerHeight,
     // height: window.innerWidth,
-    background: "#444444",
+    background: '#444444',
     antialias: true,
     hello: true,
-    powerPreference: "high-performance",
+    powerPreference: 'high-performance'
   })
   //@ts-expect-error
   globalThis.__PIXI_APP__ = app
@@ -27,7 +28,7 @@ async function main() {
   // const textures = await PIXI.Assets.load(["punkSpriteSheetPNG"])
 
   let currAnimationIndex = 0
-  const sheet = await PIXI.Assets.load("punkSpriteSheet")
+  const sheet = await PIXI.Assets.load('punkSpriteSheet')
 
   const SCALE = 1.5
 
@@ -57,13 +58,13 @@ async function main() {
 
   const playerGraphic = new PIXI.Graphics()
 
-  let hitBullets = Number(window.localStorage.getItem("hits")) || 0
+  let hitBullets = Number(window.localStorage.getItem('hits')) || 0
   let playerHeight = 50 + hitBullets
   const playerWidth = 10
 
   const playerY = app.view.height / 2
   const playerX = app.view.width / 2
-  playerGraphic.beginFill("#ffffff")
+  playerGraphic.beginFill('#ffffff')
   playerGraphic.drawRect(playerX, playerY, playerWidth, playerHeight)
   playerGraphic.endFill()
 
@@ -72,7 +73,7 @@ async function main() {
   // player.anchor.set(0.5)
   app.stage.addChild(player)
 
-  gameDiv.addEventListener("mousemove", (e) => {
+  gameDiv.addEventListener('mousemove', (e) => {
     if (e.offsetY - player.height / 2 < 0) {
       player.y = 0
     } else if (e.offsetY + player.height / 2 > app.view.height) {
@@ -94,12 +95,12 @@ async function main() {
   let timeSinceLastHitGold = Date.now()
 
   const textOptions: Partial<ITextStyle> = {
-    fontSize: "0.9rem",
-    fontFamily: "monospace",
-    fill: "#ffffff",
-    padding: 10,
+    fontSize: '0.9rem',
+    fontFamily: 'monospace',
+    fill: '#ffffff',
+    padding: 10
   }
-  const FPS_Text = new PIXI.Text("FPS: 0", textOptions)
+  const FPS_Text = new PIXI.Text('FPS: 0', textOptions)
   FPS_Text.x = 8
   FPS_Text.y = 8
 
@@ -159,9 +160,14 @@ async function main() {
     goldBulletPercentageText.x + goldBulletPercentageText.width + 24
   difficultyText.y = goldBulletPercentageText.y
 
-  difficultyText.interactive = true
-  difficultyText.buttonMode = true
-  difficultyText.on("pointerdown", changeDifficulty)
+  difficultyText.eventMode = 'dynamic'
+  // difficultyText.buttonMode = true
+  difficultyText.on('pointerdown', changeDifficulty)
+
+  const pauseText = new PIXI.Text(`Press [p] to pause`, textOptions)
+
+  pauseText.x = resetText.x + resetText.width + 24
+  pauseText.y = 8
 
   app.stage.addChild(FPS_Text)
   app.stage.addChild(hitBulletsText)
@@ -171,9 +177,7 @@ async function main() {
   app.stage.addChild(bulletPercentageText)
   app.stage.addChild(goldBulletPercentageText)
   app.stage.addChild(difficultyText)
-
-  const difficultyContainer = new PIXI.Container()
-  difficultyContainer.add
+  app.stage.addChild(pauseText)
 
   let bulletsSpawned = 0
   let bulletsHit = 0
@@ -183,13 +187,44 @@ async function main() {
   const difficulties = {
     easy: 0.001,
     normal: 0.062,
-    hard: 0.1,
+    hard: 0.1
   }
 
-  let chossenDifficulty: keyof typeof difficulties = "easy"
+  let chossenDifficulty: keyof typeof difficulties = 'easy'
+  let isPaused = false
 
-  app.ticker.add((delta) => {
-    console.log(chossenDifficulty)
+  const pauseScreen = new PIXI.Graphics()
+  pauseScreen.height = app.stage.height * scale
+  pauseScreen.width = app.stage.width * scale
+  pauseScreen.beginFill('#ffffff')
+  pauseScreen.drawRect(0, 0, app.stage.height * scale, app.stage.width * scale)
+  pauseScreen.endFill()
+  pauseScreen.alpha = 0.8
+  pauseScreen.name = 'pause screen'
+
+  const pauseScreenText = new PIXI.Text('PAUSED', {
+    fill: 'black',
+    fontSize: '4rem',
+    fontWeight: '900',
+    padding: 10
+  })
+
+  pauseScreenText.anchor.set(0.5)
+  console.log({
+    width: pauseScreen.width,
+    height: pauseScreen.height,
+    bounds: pauseScreen.getBounds()
+  })
+
+  pauseScreenText.position.x = pauseScreen.width / 2 - pauseScreenText.width / 2 //middle of screen
+  pauseScreenText.position.y =
+    pauseScreen.height / 8 - pauseScreenText.height / 2 //don't know why but /8 seems to center vertically
+  pauseScreen.addChild(pauseScreenText)
+
+  const ticker = app.ticker.add((delta) => {
+    if (isPaused) {
+      return
+    }
 
     if (player._height < 0) {
       player.height = 50
@@ -213,20 +248,37 @@ async function main() {
   })
 
   setupResetButton()
+  setupPausedButton()
 
   function setupResetButton() {
-    window.addEventListener("keypress", (e) => {
-      if (e.key === "r" || e.key === "R") {
+    window.addEventListener('keypress', (e) => {
+      if (e.key === 'r' || e.key === 'R') {
         bulletsSpawned = 0
         bulletsHit = 0
         goldBulletsSpawned = 0
         goldBulletsHit = 0
         hitBullets = 0
-        window.localStorage.setItem("hits", "0")
+        window.localStorage.setItem('hits', '0')
         timeSinceLastHit = Date.now()
         timeSinceLastHitGold = Date.now()
         playerHeight = 50 + hitBullets
         player.height = playerHeight
+      }
+    })
+  }
+
+  function setupPausedButton() {
+    window.addEventListener('keypress', (e) => {
+      if (e.key === 'p' || e.key === 'P') {
+        isPaused = !isPaused
+        if (isPaused) {
+          app.stage.addChild(pauseScreen)
+          // ticker.stop()
+          console.log({ children: app.stage.children })
+        } else {
+          // ticker.start()
+          app.stage.removeChild(pauseScreen)
+        }
       }
     })
   }
@@ -246,11 +298,11 @@ async function main() {
   }
 
   function loadAssets() {
-    sound.add("pop", "/assets/audio/pop.wav")
-    sound.add("gold-pop", "/assets/audio/gold-pop.mp3")
+    sound.add('pop', '/assets/audio/pop.wav')
+    sound.add('gold-pop', '/assets/audio/gold-pop.mp3')
 
-    PIXI.Assets.add("punkSpriteSheet", "assets/Punk/spritesheet.json")
-    PIXI.Assets.add("punkSpriteSheetPNG", "assets/Punk/Spritesheet.png")
+    PIXI.Assets.add('punkSpriteSheet', 'assets/Punk/spritesheet.json')
+    PIXI.Assets.add('punkSpriteSheetPNG', 'assets/Punk/Spritesheet.png')
   }
 
   function addBulletToGame() {
@@ -264,7 +316,7 @@ async function main() {
 
     const y = randomIntBetween(10, app.view.height - height)
     const x = reversed ? app.view.width : 0 - width
-    newBulletGraphic.beginFill(isGold ? "#FFD700" : "#ff00ff")
+    newBulletGraphic.beginFill(isGold ? '#FFD700' : '#ff00ff')
     newBulletGraphic.drawRect(x, y, width, height)
     newBulletGraphic.endFill()
 
@@ -283,7 +335,7 @@ async function main() {
       bullet: newBulletGraphic,
       reversed,
       speed: isGold ? speed * 3 : speed,
-      isGold,
+      isGold
     })
 
     elapsed2 = 0
@@ -317,19 +369,19 @@ async function main() {
 
         if (isGold) {
           // sound.play("gold-pop")
-          sound.play("pop", {
-            filters: [new filters.DistortionFilter(0.08)],
+          sound.play('pop', {
+            filters: [new filters.DistortionFilter(0.08)]
           })
           goldBulletsHit++
           player.height += 10
           timeSinceLastHitGold = Date.now()
           hitBullets += 10
         } else {
-          sound.play("pop")
+          sound.play('pop')
           hitBullets++
         }
 
-        window.localStorage.setItem("hits", hitBullets.toString())
+        window.localStorage.setItem('hits', hitBullets.toString())
         bullet.destroy()
         bullets.splice(index, 1)
         index--
@@ -365,14 +417,14 @@ async function main() {
     difficultyText.text = `Difficulty: ${chossenDifficulty}`
 
     switch (chossenDifficulty) {
-      case "easy":
-        difficultyText.style.fill = "#84cc16"
+      case 'easy':
+        difficultyText.style.fill = '#84cc16'
         break
-      case "normal":
-        difficultyText.style.fill = "#f59e0b"
+      case 'normal':
+        difficultyText.style.fill = '#f59e0b'
         break
-      case "hard":
-        difficultyText.style.fill = "#ef4444"
+      case 'hard':
+        difficultyText.style.fill = '#ef4444'
         break
     }
 
