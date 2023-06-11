@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/sjohnston00/html-canvas-playground#readme",
   "devDependencies": {
-    "esbuild": "^0.17.19",
+    "esbuild": "^0.18.0",
     "typescript": "^5.1.3"
   },
   "dependencies": {
